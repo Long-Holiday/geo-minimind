@@ -8,7 +8,7 @@ from peft import PeftModel
 
 def main():
     parser = argparse.ArgumentParser(description="Merge LoRA weights with base model")
-    parser.add_argument("--base_model", type=str, default="Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    parser.add_argument("--base_model", type=str, default="Qwen/Qwen2.5-Coder-1.5B-Instruct",
                         help="Base model name or path")
     parser.add_argument("--lora_model", type=str, default="out/qwen_lora_sft",
                         help="Path to trained LoRA adapter")
@@ -18,10 +18,10 @@ def main():
 
     # 优先检测 ModelScope 本地缓存以规避 SSL 网络限制
     base_model_path = args.base_model
-    if base_model_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct"]:
-        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
-        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
-        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
+    if base_model_path in ["Qwen/Qwen2.5-Coder-1.5B-Instruct", "qwen/Qwen2.5-Coder-1.5B-Instruct"]:
+        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
+        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
         if os.path.exists(modelscope_cache):
             print(f"Redirecting base_model {base_model_path} to local ModelScope cache: {modelscope_cache}")
             base_model_path = modelscope_cache

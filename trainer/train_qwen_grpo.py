@@ -140,7 +140,7 @@ def save_checkpoint(model, optimizer, step, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(description="GRPO Alignment for Qwen2.5-Coder GEE")
-    parser.add_argument("--model_name_or_path", "--model_path", type=str, default="pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct",
+    parser.add_argument("--model_name_or_path", "--model_path", type=str, default="pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct",
                         dest="model_name_or_path", help="Base model name or path")
     parser.add_argument("--data_path", type=str, default="./data/gee_rl_prompts_train.jsonl",
                         help="Path to RL training prompts jsonl file")
@@ -161,7 +161,28 @@ def main():
     parser.add_argument("--use_wandb", action="store_true", help="Enable Wandb tracking")
     parser.add_argument("--wandb_project", type=str, default="geo-minimind-grpo", help="Wandb project name")
     parser.add_argument("--use_swanlab", action="store_true", help="Enable Swanlab tracking")
+    parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml file")
     args = parser.parse_args()
+
+    # 从 config.yaml 中读取参数覆盖默认参数
+    config_file = args.config
+    if not os.path.exists(config_file) and config_file == "config.yaml" and os.path.exists("config.ymal"):
+        config_file = "config.ymal"
+
+    if os.path.exists(config_file):
+        try:
+            import yaml
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config_data = yaml.safe_load(f)
+            if config_data and 'grpo' in config_data:
+                print(f"Loading configuration from {config_file} for GRPO training...")
+                grpo_config = config_data['grpo']
+                for key, val in grpo_config.items():
+                    if hasattr(args, key):
+                        setattr(args, key, val)
+                        print(f"  [Config GRPO] Override: {key} = {val}")
+        except Exception as e:
+            print(f"[Warning] Failed to load config file {config_file}: {e}")
 
     device = args.device
     print(f"Using device: {device}")
@@ -173,9 +194,9 @@ def main():
     # 2. 确定模型路径
     model_path = "out/qwen_sft_merged"
     if not os.path.exists(model_path) or not os.listdir(model_path):
-        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
-        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
-        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
+        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
+        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
         if os.path.exists(modelscope_cache):
             print(f"SFT merged model not found. Using local ModelScope cache: {modelscope_cache}")
             model_path = modelscope_cache
@@ -187,7 +208,7 @@ def main():
             model_path = local_pretrained_alt
         else:
             fallback_path = args.model_name_or_path
-            if fallback_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct", "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"]:
+            if fallback_path in ["Qwen/Qwen2.5-Coder-1.5B-Instruct", "qwen/Qwen2.5-Coder-1.5B-Instruct", "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"]:
                 if os.path.exists(modelscope_cache):
                     fallback_path = modelscope_cache
                 elif os.path.exists(local_pretrained):

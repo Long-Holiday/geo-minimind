@@ -37,8 +37,8 @@ def get_latest_checkpoint(output_dir):
     return checkpoints[-1]
 
 def main():
-    parser = argparse.ArgumentParser(description="Qwen2.5-Coder-0.5B-Instruct LoRA SFT Trainer")
-    parser.add_argument("--model_name_or_path", "--model_path", type=str, default="Qwen/Qwen2.5-Coder-0.5B-Instruct",
+    parser = argparse.ArgumentParser(description="Qwen2.5-Coder-1.5B-Instruct LoRA SFT Trainer")
+    parser.add_argument("--model_name_or_path", "--model_path", type=str, default="Qwen/Qwen2.5-Coder-1.5B-Instruct",
                         dest="model_name_or_path", help="HuggingFace model path or local path")
     parser.add_argument("--train_file", "--data_path", type=str, default="data/gee_sft_merged_train.jsonl",
                         dest="train_file", help="Path to training jsonl file")
@@ -71,15 +71,36 @@ def main():
     parser.add_argument("--use_wandb", action="store_true", help="Enable Wandb tracking")
     parser.add_argument("--wandb_project", type=str, default="geo-minimind-sft", help="Wandb project name")
     parser.add_argument("--use_swanlab", action="store_true", help="Enable Swanlab tracking")
+    parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml file")
     
     args = parser.parse_args()
 
+    # 从 config.yaml 中读取参数覆盖默认参数
+    config_file = args.config
+    if not os.path.exists(config_file) and config_file == "config.yaml" and os.path.exists("config.ymal"):
+        config_file = "config.ymal"
+
+    if os.path.exists(config_file):
+        try:
+            import yaml
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config_data = yaml.safe_load(f)
+            if config_data and 'sft' in config_data:
+                print(f"Loading configuration from {config_file} for SFT training...")
+                sft_config = config_data['sft']
+                for key, val in sft_config.items():
+                    if hasattr(args, key):
+                        setattr(args, key, val)
+                        print(f"  [Config SFT] Override: {key} = {val}")
+        except Exception as e:
+            print(f"[Warning] Failed to load config file {config_file}: {e}")
+
     # 如果是默认的 Qwen 路径，且本地 ModelScope 存在该缓存，则自动重定向以加速加载并规避网络错误
     model_path = args.model_name_or_path
-    if model_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct"]:
-        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
-        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
-        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
+    if model_path in ["Qwen/Qwen2.5-Coder-1.5B-Instruct", "qwen/Qwen2.5-Coder-1.5B-Instruct"]:
+        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
+        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
         if os.path.exists(modelscope_cache):
             print(f"Redirecting {model_path} to local ModelScope cache: {modelscope_cache}")
             model_path = modelscope_cache

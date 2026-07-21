@@ -108,9 +108,9 @@ if __name__ == '__main__':
     from transformers import AutoTokenizer
     import os
     print("Loading Qwen tokenizer...")
-    model_path = 'Qwen/Qwen2.5-Coder-0.5B-Instruct'
-    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
-    local_pretrained = "/home/default_user/geo-minimind/pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
+    model_path = 'Qwen/Qwen2.5-Coder-1.5B-Instruct'
+    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
+    local_pretrained = "/home/default_user/geo-minimind/pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
     kwargs = {}
     if os.path.exists(modelscope_cache):
         model_path = modelscope_cache

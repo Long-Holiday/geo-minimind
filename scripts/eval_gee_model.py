@@ -169,11 +169,11 @@ def load_test_dataset(test_path):
 
 def init_model(model_path, lora_path, device):
     # 优先检测本地 ModelScope 缓存或本地预下载路径
-    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
-    local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
-    local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
+    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
+    local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+    local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
     
-    if not os.path.exists(model_path) or model_path in ['./pretrained_models/Qwen2.5-Coder-0.5B-Instruct', 'Qwen/Qwen2.5-Coder-0.5B-Instruct', 'qwen/Qwen2.5-Coder-0.5B-Instruct']:
+    if not os.path.exists(model_path) or model_path in ['./pretrained_models/Qwen2.5-Coder-1.5B-Instruct', 'Qwen/Qwen2.5-Coder-1.5B-Instruct', 'qwen/Qwen2.5-Coder-1.5B-Instruct']:
         if os.path.exists(modelscope_cache):
             print(f"Redirecting base model to local ModelScope cache: {modelscope_cache}")
             model_path = modelscope_cache
@@ -258,7 +258,7 @@ EVAL_RESULTS_JSON -->
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate GEE models")
-    parser.add_argument('--model_path', type=str, default='./pretrained_models/Qwen2.5-Coder-0.5B-Instruct', help="Base model path")
+    parser.add_argument('--model_path', type=str, default='./pretrained_models/Qwen2.5-Coder-1.5B-Instruct', help="Base model path")
     parser.add_argument('--lora_path', type=str, default='None', help="LoRA adapter weight path")
     parser.add_argument('--model_name', type=str, default='Base', choices=['Base', 'SFT', 'GRPO'], help="Model variant name")
     parser.add_argument('--test_path', type=str, default='data/gee_sft_merged_test.jsonl', help="Path to test dataset jsonl")

@@ -1,0 +1,48 @@
+# GEO-MiniMind 训练与运行配置文件
+# 支持 YAML 格式，若修改此处的参数，一键启动脚本与训练代码将自动同步应用
+
+# SFT (Supervised Fine-Tuning) 监督微调配置
+sft:
+  model_name_or_path: "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+  train_file: "data/gee_sft_merged_train.jsonl"
+  val_file: "data/gee_sft_merged_val.jsonl"
+  output_dir: "out/qwen_lora_sft"
+  num_train_epochs: 5
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 32
+  learning_rate: 0.0001 # 1e-4
+  max_length: 512
+  save_steps: 100
+  eval_steps: 50
+  lora_r: 64
+  lora_alpha: 128
+  use_wandb: false
+  wandb_project: "geo-minimind-sft"
+
+# GRPO (Group Relative Policy Optimization) 强化学习对齐配置
+grpo:
+  model_name_or_path: "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
+  data_path: "./data/gee_rl_prompts_train.jsonl"
+  output_dir: "./out/qwen_grpo"
+  num_epochs: 2
+  lr: 0.000002 # 2e-6
+  batch_size: 1
+  beta: 0.05
+  epsilon: 0.2
+  ppo_epochs: 1
+  num_generations: 4
+  save_steps: 10
+  log_steps: 1
+  max_seq_len: 512
+  max_gen_len: 256
+  use_wandb: false
+  wandb_project: "geo-minimind-grpo"
+
+# API & Web UI 服务部署配置
+server:
+  host: "0.0.0.0"
+  port: 8998
+  enable_api_server: false # 是否允许启动 API Server 接口服务
+  enable_web_ui: false     # 是否允许启动 Streamlit Web 页面演示
+  # 注：Web UI (Streamlit) 默认运行在 8501 端口
