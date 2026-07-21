@@ -9,3 +9,5 @@ pretrained_models/
 *.pth
 *.bin
 *.pt
+data/*.jsonl
+eval_results/

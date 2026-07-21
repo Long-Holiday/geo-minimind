@@ -30,3 +30,11 @@ swanlab==0.7.11
 modelscope==1.37.0
 # torch==2.6.0
 # torchvision==0.21.0
+peft>=0.12.0
+trl>=0.13.0
+transformers>=4.57.0
+bitsandbytes>=0.43
+accelerate>=0.34.0
+wandb
+rouge-score
+codebleu

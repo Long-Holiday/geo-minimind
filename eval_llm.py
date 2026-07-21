@@ -1,3 +1,9 @@
+import os
+# 设置离线模式和环境变量以防网络报错
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 import time
 import argparse
 import random
@@ -10,8 +16,21 @@ from trainer.trainer_utils import setup_seed, get_model_params
 warnings.filterwarnings('ignore')
 
 def init_model(args):
-    tokenizer = AutoTokenizer.from_pretrained(args.load_from, trust_remote_code=True)
-    if 'model' in args.load_from:
+    model_path = args.load_from
+    
+    # 优先检测本地 ModelScope 缓存
+    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
+    if model_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct"]:
+        if os.path.exists(modelscope_cache):
+            print(f"Redirecting base model to local ModelScope cache: {modelscope_cache}")
+            model_path = modelscope_cache
+
+    kwargs = {}
+    if os.path.exists(model_path):
+        kwargs["local_files_only"] = True
+
+    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, **kwargs)
+    if 'model' in model_path:
         model = MiniMindForCausalLM(MiniMindConfig(
             hidden_size=args.hidden_size,
             num_hidden_layers=args.num_hidden_layers,
@@ -25,7 +44,7 @@ def init_model(args):
             apply_lora(model)
             load_lora(model, f'./{args.save_dir}/{args.lora_weight}_{args.hidden_size}.pth')
     else:
-        model = AutoModelForCausalLM.from_pretrained(args.load_from, trust_remote_code=True)
+        model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, **kwargs)
         if args.lora_weight != 'None':
             from peft import PeftModel
             print(f"Loading PEFT adapter weights from {args.lora_weight}...")

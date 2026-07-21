@@ -16,6 +16,11 @@ from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
 warnings.filterwarnings('ignore')
 
+# 离线环境变量设置
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 def extract_python_code(text):
     # Extract ```python ... ```
     pattern_py = re.compile(r'```python\s*(.*?)\s*```', re.DOTALL)
@@ -163,20 +168,21 @@ def load_test_dataset(test_path):
     return dataset
 
 def init_model(model_path, lora_path, device):
-    if not os.path.exists(model_path) and "Qwen2.5-Coder-0.5B-Instruct" in model_path:
-        try:
-            print(f"Local path {model_path} not found. Trying to download from ModelScope...")
-            from modelscope import snapshot_download
-            model_dir = snapshot_download('Qwen/Qwen2.5-Coder-0.5B-Instruct', cache_dir='./pretrained_models')
-            model_path = model_dir
-            print(f"Model downloaded to {model_path}")
-        except Exception as e:
-            print(f"Failed to download from ModelScope: {e}. Will fallback to direct transformers loading.")
+    # 优先检测本地 ModelScope 缓存
+    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
+    if not os.path.exists(model_path) or model_path in ['./pretrained_models/Qwen2.5-Coder-0.5B-Instruct', 'Qwen/Qwen2.5-Coder-0.5B-Instruct', 'qwen/Qwen2.5-Coder-0.5B-Instruct']:
+        if os.path.exists(modelscope_cache):
+            print(f"Redirecting base model to local ModelScope cache: {modelscope_cache}")
+            model_path = modelscope_cache
+
+    kwargs = {}
+    if os.path.exists(model_path):
+        kwargs["local_files_only"] = True
             
     print(f"Loading tokenizer from {model_path}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, **kwargs)
     print(f"Loading model from {model_path}...")
-    model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, **kwargs)
     
     if lora_path != 'None' and lora_path != '':
         print(f"Loading LoRA adapter from {lora_path}...")
