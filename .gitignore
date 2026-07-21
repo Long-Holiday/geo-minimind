@@ -1,6 +1,11 @@
 __pycache__/
 *.pyc
 .DS_Store
-out
+out/
 website/
 docs-minimind/
+pretrained_models/
+/root/autodl-tmp/
+*.pth
+*.bin
+*.pt

@@ -10,7 +10,7 @@ from trainer.trainer_utils import setup_seed, get_model_params
 warnings.filterwarnings('ignore')
 
 def init_model(args):
-    tokenizer = AutoTokenizer.from_pretrained(args.load_from)
+    tokenizer = AutoTokenizer.from_pretrained(args.load_from, trust_remote_code=True)
     if 'model' in args.load_from:
         model = MiniMindForCausalLM(MiniMindConfig(
             hidden_size=args.hidden_size,
@@ -26,6 +26,10 @@ def init_model(args):
             load_lora(model, f'./{args.save_dir}/{args.lora_weight}_{args.hidden_size}.pth')
     else:
         model = AutoModelForCausalLM.from_pretrained(args.load_from, trust_remote_code=True)
+        if args.lora_weight != 'None':
+            from peft import PeftModel
+            print(f"Loading PEFT adapter weights from {args.lora_weight}...")
+            model = PeftModel.from_pretrained(model, args.lora_weight)
     get_model_params(model, model.config)
     return model.half().eval().to(args.device), tokenizer
 
@@ -70,10 +74,13 @@ def main():
         if input_mode == 0: print(f'💬: {prompt}')
         conversation = conversation[-args.historys:] if args.historys else []
         conversation.append({"role": "user", "content": prompt})
-        if 'pretrain' in args.weight:
-            inputs = tokenizer.bos_token + prompt
+        if 'model' in args.load_from:
+            if 'pretrain' in args.weight:
+                inputs = tokenizer.bos_token + prompt
+            else:
+                inputs = tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True, open_thinking=bool(args.open_thinking))
         else:
-            inputs = tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True, open_thinking=bool(args.open_thinking))
+            inputs = tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True)
         
         inputs = tokenizer(inputs, return_tensors="pt", truncation=True).to(args.device)
 
