@@ -20,9 +20,17 @@ def main():
     base_model_path = args.base_model
     if base_model_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct"]:
         modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
+        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
+        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
         if os.path.exists(modelscope_cache):
             print(f"Redirecting base_model {base_model_path} to local ModelScope cache: {modelscope_cache}")
             base_model_path = modelscope_cache
+        elif os.path.exists(local_pretrained):
+            print(f"Redirecting base_model {base_model_path} to local pre-downloaded path: {local_pretrained}")
+            base_model_path = local_pretrained
+        elif os.path.exists(local_pretrained_alt):
+            print(f"Redirecting base_model {base_model_path} to local pre-downloaded path: {local_pretrained_alt}")
+            base_model_path = local_pretrained_alt
 
     kwargs = {}
     if base_model_path != args.base_model:

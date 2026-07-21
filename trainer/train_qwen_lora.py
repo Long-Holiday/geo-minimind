@@ -38,35 +38,38 @@ def get_latest_checkpoint(output_dir):
 
 def main():
     parser = argparse.ArgumentParser(description="Qwen2.5-Coder-0.5B-Instruct LoRA SFT Trainer")
-    parser.add_argument("--model_name_or_path", type=str, default="Qwen/Qwen2.5-Coder-0.5B-Instruct",
-                        help="HuggingFace model path or local path")
-    parser.add_argument("--train_file", type=str, default="data/gee_sft_merged_train.jsonl",
-                        help="Path to training jsonl file")
-    parser.add_argument("--val_file", type=str, default="data/gee_sft_merged_val.jsonl",
-                        help="Path to validation jsonl file")
+    parser.add_argument("--model_name_or_path", "--model_path", type=str, default="Qwen/Qwen2.5-Coder-0.5B-Instruct",
+                        dest="model_name_or_path", help="HuggingFace model path or local path")
+    parser.add_argument("--train_file", "--data_path", type=str, default="data/gee_sft_merged_train.jsonl",
+                        dest="train_file", help="Path to training jsonl file")
+    parser.add_argument("--val_file", "--eval_data_path", type=str, default="data/gee_sft_merged_val.jsonl",
+                        dest="val_file", help="Path to validation jsonl file")
     parser.add_argument("--output_dir", type=str, default="out/qwen_lora_sft",
                         help="Output directory for checkpoints")
     parser.add_argument("--from_resume", action="store_true",
                         help="Resume training from the latest checkpoint if available")
-    parser.add_argument("--num_train_epochs", type=int, default=3,
-                        help="Number of training epochs")
-    parser.add_argument("--per_device_train_batch_size", type=int, default=4,
-                        help="Batch size per device for training")
+    parser.add_argument("--num_train_epochs", "--epochs", type=int, default=3,
+                        dest="num_train_epochs", help="Number of training epochs")
+    parser.add_argument("--per_device_train_batch_size", "--batch_size", type=int, default=4,
+                        dest="per_device_train_batch_size", help="Batch size per device for training")
     parser.add_argument("--per_device_eval_batch_size", type=int, default=4,
                         help="Batch size per device for evaluation")
-    parser.add_argument("--gradient_accumulation_steps", type=int, default=4,
-                        help="Number of updates steps to accumulate before performing a backward/update pass")
+    parser.add_argument("--gradient_accumulation_steps", "--accumulation_steps", type=int, default=4,
+                        dest="gradient_accumulation_steps", help="Number of updates steps to accumulate before performing a backward/update pass")
     parser.add_argument("--learning_rate", type=float, default=1e-4,
                         help="Initial learning rate")
-    parser.add_argument("--max_length", type=int, default=1024,
-                        help="Maximum sequence length")
+    parser.add_argument("--max_length", "--max_seq_len", type=int, default=1024,
+                        dest="max_length", help="Maximum sequence length")
     parser.add_argument("--save_steps", type=int, default=100,
                         help="Save checkpoint every X steps")
     parser.add_argument("--eval_steps", type=int, default=100,
                         help="Evaluate model every X steps")
     parser.add_argument("--max_steps", type=int, default=-1,
                         help="Maximum training steps (-1 to disable)")
+    parser.add_argument("--lora_r", type=int, default=64, help="LoRA rank")
+    parser.add_argument("--lora_alpha", type=int, default=128, help="LoRA alpha scaling factor")
     parser.add_argument("--use_wandb", action="store_true", help="Enable Wandb tracking")
+    parser.add_argument("--wandb_project", type=str, default="geo-minimind-sft", help="Wandb project name")
     parser.add_argument("--use_swanlab", action="store_true", help="Enable Swanlab tracking")
     
     args = parser.parse_args()
@@ -75,16 +78,24 @@ def main():
     model_path = args.model_name_or_path
     if model_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct"]:
         modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
+        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
+        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
         if os.path.exists(modelscope_cache):
             print(f"Redirecting {model_path} to local ModelScope cache: {modelscope_cache}")
             model_path = modelscope_cache
+        elif os.path.exists(local_pretrained):
+            print(f"Redirecting {model_path} to local pre-downloaded path: {local_pretrained}")
+            model_path = local_pretrained
+        elif os.path.exists(local_pretrained_alt):
+            print(f"Redirecting {model_path} to local pre-downloaded path: {local_pretrained_alt}")
+            model_path = local_pretrained_alt
 
     # 1. 实验追踪初始化
     report_to = []
     if args.use_wandb:
         try:
             import wandb
-            wandb.init(project="geo-minimind-sft", config=vars(args))
+            wandb.init(project=args.wandb_project, config=vars(args))
             report_to.append("wandb")
         except ImportError:
             print("[Warning] wandb is not installed, skipping wandb logging.")
@@ -92,7 +103,7 @@ def main():
     if args.use_swanlab:
         try:
             import swanlab
-            swanlab.init(project="geo-minimind-sft", config=vars(args))
+            swanlab.init(project=args.wandb_project, config=vars(args))
             report_to.append("swanlab")
         except ImportError:
             print("[Warning] swanlab is not installed, skipping swanlab logging.")
@@ -128,8 +139,8 @@ def main():
 
     # 4. 配置 PEFT LoRA
     lora_config = LoraConfig(
-        r=64,
-        lora_alpha=128,
+        r=args.lora_r,
+        lora_alpha=args.lora_alpha,
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
         lora_dropout=0.05,
         bias="none",

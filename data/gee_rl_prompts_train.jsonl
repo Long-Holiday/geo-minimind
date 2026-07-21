@@ -1,0 +1,1653 @@
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.select` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API，加载要素集并通过计算各要素的面积进行筛选过滤。具体为：加载 US 郡县数据，利用 area 方法计算每个郡县的面积，过滤保留面积大于 3000 平方公里的要素并可视化。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.slope 方法对 撒哈拉沙漠 地区进行 基于SRTM高程数据计算地形坡度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `CustomFunction.CountFunctions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API，使用众数滤波器（majority filter）或焦斑分析方法对土地覆被分类图（Landcover Classification）进行去噪和平滑处理。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `newTaskId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：使用 GEE Python API 筛选 Landsat 影像集（按日期、空间边界过滤），然后计算中值合成影像，并对其做色彩可视化配置后添加到地图上。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.CenterMap` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次进行图像分类。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `TileFetcher` 类的作用、用法及主要参数定义。"}
+{"prompt": "实现：使用 GEE Python API，对 Landsat 影像的不同部分使用不同的动态范围进行拉伸显示（例如陆地部分正常显示，水体部分高倍率拉伸以显现细节）。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.asin` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Filter` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterBounds 方法对 伦敦 地区进行 按空间范围过滤与指定区域相交的影像集？并给出核心执行代码。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:4326，并提取像元值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.multiply 方法对 亚马逊雨林 地区进行 对影像的浮点数像元进行乘法放大存储？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Point 方法对 撒哈拉沙漠 地区进行 指定地理经纬度坐标，构建一个空间点要素？并给出核心执行代码。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:32649，并提取像元值"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，在 ImageCollection 影像集上通过 map 迭代应用数学计算表达式（如增强植被指数 EVI 计算公式），返回计算后的新波段集。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.setOutputMode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.int16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.distinct` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.scale` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.short` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.And` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.fromImages` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.randomPoints` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sum 方法对 伦敦 地区进行 对影像集沿时间轴进行像元值累加？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.circularVariance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.union 方法对 亚马逊雨林 地区进行 将两个相连的空间几何区域融合成一个大地理多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.lt 方法对 北京 地区进行 对影像做小于阈值的二值化分割？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.errorMatrix 方法对 伦敦 地区进行 基于两属性计算分类混淆矩阵？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.add` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.count` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setMaxRetries` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `build_cloud_resource_from_document` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toShort` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Classifier.smileRandomForest 方法对 北京 地区进行 初始化一个带100棵决策树的随机森林分类器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.leftShift` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `isSubtype` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gradient 方法对 旧金山 地区进行 计算灰度影像的横向和纵向梯度变化？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.toArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.translate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.lookupInternal` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.smileRandomForest` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayLengths` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_2' 转换为小写格式并在客户端输出"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次进行去云处理。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.reduceRegion 方法对 旧金山 地区进行 计算影像指定区域的像元均值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.size 方法对 旧金山 地区进行 查询矢量要素集中总共包含的要素个数？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.median 方法对 北京 地区进行 对影像集进行像元中位数合成，用于去除噪点？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API，加载 'GOOGLE/EE/DEMOS/bart-locations' 湾区捷运站要素集，对每个要素生成 2000 米的缓冲区，合并所有缓冲区，并以颜色 '800080' 添加到地图上显示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.union` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.end` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.geometry` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.maxDifference` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.short` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.type` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.hypot` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.keys` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.geometry` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：使用 GEE Python API，使用众数滤波器（majority filter）或焦斑分析方法对土地覆被分类图（Landcover Classification）进行去噪和平滑处理。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `listAssets` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.bitCount` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 北京 地区做一次绿化情况分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.equals` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `deleteAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.unmix` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.int8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.area` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapOverlay.Interpolate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.max 方法对 伦敦 地区进行 计算影像集在时间轴上的像元最大值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `call` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.difference` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：使用 GEE Python API 从给定的多边形坐标列表创建 ee.Geometry，并将其包装为 ee.FeatureCollection 进行地图展示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.accum` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.manhattan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.addBands 方法对 伦敦 地区进行 将常数层作为一个新波段追加到原影像中？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.projection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `video.toCloudStorage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 北京 地区做一次进行去云处理。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.replaceAll` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.accuracy` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 中的 where 方法，根据特定掩膜条件（如高程、坡度等）对影像的像元值进行有条件替换。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Authenticate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.aggregate_sum 方法对 伦敦 地区进行 计算矢量要素集中所有要素的累计面积和？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.saveFirst` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.getDownloadURL` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mosaic 方法对 旧金山 地区进行 将影像集中的多幅无重叠影像无缝拼接？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.encode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.stringContains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Terrain.slope` 方法的作用、参数列表和使用规范。"}
+{"prompt": "编写最简代码加载 ee.Image 空间资源"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toUint16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.erfcInv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.int64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_10' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.max 方法对 北京 地区进行 创建一个最大值规约器，提取特征最大响应？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.float` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.regexpRename` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.tanh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.toArrayPerBand` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.lte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.distance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.getMapId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Terrain` 类的作用、用法及主要参数定义。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API，通过传入影像的 Asset ID（如 'CGIAR/SRTM90_V4'）加载影像并添加到地图。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 对指定边界外的要素进行掩膜过滤，实现反向掩膜效果。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_operation_to_task` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.get` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `_Http` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.repeat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.byte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.getRegion` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.erf` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.Polygon` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.sort` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.uint16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.limit` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.size 方法对 撒哈拉沙漠 地区进行 查询矢量要素集中总共包含的要素个数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixTranspose` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Terrain.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 对两个要素集合进行空间或属性上的连接（Join）操作。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.clamp` 方法的作用、参数列表和使用规范。"}
+{"prompt": "编写最简代码加载 ee.Geometry.Point 空间资源"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.max 方法对 旧金山 地区进行 计算影像集在时间轴上的像元最大值？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toInt8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.cutLines` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.linearFit 方法对 旧金山 地区进行 创建一个用于一元回归分析计算变化率斜率的规约器？并给出核心执行代码。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 从给定的多边形坐标列表创建 ee.Geometry，并将其包装为 ee.FeatureCollection 进行地图展示。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.errorMatrix 方法对 撒哈拉沙漠 地区进行 基于两属性计算分类混淆矩阵？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.AddTile` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DatetimeToMicroseconds` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:32649，并提取像元值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.firstNonZero` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_to_table_file_format` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:4326，并提取像元值"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `video` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.select 方法对 北京 地区进行 从遥感影像中选择RGB可见光波段进行显示？并给出核心执行代码。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LE07/C02/T1_TOA/LE07_044034_20020811' 的波段均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.max` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 从给定的多边形坐标列表创建 ee.Geometry，并将其包装为 ee.FeatureCollection 进行地图展示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.int` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.MultiPoint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ComputedObjectMetaclass` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.slice` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixTrace` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.sum 方法对 旧金山 地区进行 创建一个累加规约器进行积分和总量求和？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.add 方法对 旧金山 地区进行 对整幅影像的所有像元进行加法补偿运算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.set` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_mean 方法对 北京 地区进行 计算整个影像集中所有影像的平均云量？并给出核心执行代码。"}
+{"prompt": "实现：使用 GEE Python API 对指定边界外的要素进行掩膜过滤，实现反向掩膜效果。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.hypot` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.changeProj` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.product` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LE07/C02/T1_TOA/LE07_044034_20020811' 的波段均值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filterDate 方法对 旧金山 地区进行 按时间筛选特定日期范围内的矢量要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_list_images_result_to_get_list_result` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.rindex` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.sin` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.geodesic` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 统计要素集合（FeatureCollection）中包含的矢量要素数量。"}
+{"prompt": "加载遥感影像 'COPERNICUS/S2_SR/20210615T103021_20210615T103022_T32TQD' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Task.status` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.size` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.union 方法对 伦敦 地区进行 将两个相连的空间几何区域融合成一个大地理多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.explain` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.wekaCascadeKMeans` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.max 方法对 伦敦 地区进行 创建一个最大值规约器，提取特征最大响应？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.covariance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.toBands` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.long` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toInt8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_1' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `apply` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.bitwiseOr` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.group` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `map.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：使用 GEE Python API 统计要素集合（FeatureCollection）中包含的矢量要素数量。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Function.getSignature` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.compareTo` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.select 方法对 撒哈拉沙漠 地区进行 从遥感影像中选择RGB可见光波段进行显示？并给出核心执行代码。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_8' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.translate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `WarnForDeprecatedAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.set` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Model.predictProperties` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 旧金山 地区做一次计算面积大小。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.map 方法对 亚马逊雨林 地区进行 在服务端对影像集的每幅影像执行映射计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.digamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `isString` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setDeadline` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.load` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API，对 Landsat 影像的不同部分使用不同的动态范围进行拉伸显示（例如陆地部分正常显示，水体部分高倍率拉伸以显现细节）。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_array` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getTileUrl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.geometry 方法对 伦敦 地区进行 获取整个影像集联合后覆盖的最大地理空间范围？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.rename 方法对 旧金山 地区进行 对影像的现有波段重命名？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.combine` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:32649，并提取像元值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `makeThumbUrl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.stdDev 方法对 旧金山 地区进行 创建一个标准差规约器计算像元空间波动率？并给出核心执行代码。"}
+{"prompt": "我想对 北京 地区做一次获取夜光影像。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.min 方法对 亚马逊雨林 地区进行 创建一个最小值规约器，寻找极值范围？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.decisionTree` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.frequencyHistogram` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.addBands 方法对 旧金山 地区进行 将常数层作为一个新波段追加到原影像中？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.addOverlay` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toLong` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.cbrt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.values` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `CustomFunction` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.erfc` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.match` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.gt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `decodeCloudApi` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.normalizedDifference 方法对 亚马逊雨林 地区进行 计算影像的归一化植被指数NDVI？并给出核心执行代码。"}
+{"prompt": "我想对 旧金山 地区做一次进行去云处理。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_9' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.map` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.focalMin` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.getArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.expression` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Blob.string` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_asset_type_for_create_asset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API，通过传入影像的 Asset ID（如 'CGIAR/SRTM90_V4'）加载影像并添加到地图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD09A1/2015_05_17' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiTestCase.InitializeApi` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.centroid 方法对 亚马逊雨林 地区进行 计算当前几何图形的重心中心点坐标位置？并给出核心执行代码。"}
+{"prompt": "编写最简代码加载 ee.Image 空间资源"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.getThumbURL` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 旧金山 地区做一次监测变化情况。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_mean` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.median` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `_ExpressionOptimizer.optimize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Blob.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.date` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.wekaKMeans` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.divide 方法对 旧金山 地区进行 对缩放后的影像进行除法还原计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gt 方法对 旧金山 地区进行 对影像做大于阈值的二值化提取？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.getMapId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "遍历 GEE 的 Sentinel-2 影像集合（前 3 张影像），并打印每一张影像的 system:index 编号"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.LineString 方法对 北京 地区进行 依据点集序列绘制一条直线段要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.signum` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ComputedObject.encode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.size 方法对 亚马逊雨林 地区进行 查询经过过滤后影像集中包含的影像总量？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterDate 方法对 伦敦 地区进行 按时间日期筛选影像集中的元素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.distance 方法对 亚马逊雨林 地区进行 计算地表每个像元到矢量要素的最短距离生成距离影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Classifier.smileRandomForest 方法对 撒哈拉沙漠 地区进行 初始化一个带100棵决策树的随机森林分类器？并给出核心执行代码。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Download example.\"\"\"\nimport ee\nimport ee.mapclient\n\nee.Initialize()\n\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.intersection 方法对 伦敦 地区进行 计算当前几何要素与另一图形的空间交集区域？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixQRDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sum 方法对 旧金山 地区进行 对影像集沿时间轴进行像元值累加？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Flow.save_code` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setDefaultWorkloadTag` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.remove` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.mask 方法对 撒哈拉沙漠 地区进行 应用无云掩膜过滤掉影像中的云覆盖像元？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.round` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filter 方法对 撒哈拉沙漠 地区进行 使用复杂过滤器筛选低云量的影像集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.swap` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.centroid 方法对 撒哈拉沙漠 地区进行 计算当前几何图形的重心中心点坐标位置？并给出核心执行代码。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 中的 where 方法，根据特定掩膜条件（如高程、坡度等）对影像的像元值进行有条件替换。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.randomPoints 方法对 撒哈拉沙漠 地区进行 在指定地理边界内生成100个随机坐标点要素集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterBounds 方法对 撒哈拉沙漠 地区进行 按空间范围过滤与指定区域相交的影像集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_params_to_table_manifest` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.classify 方法对 北京 地区进行 应用训练好的机器学习分类器对矢量要素集进行分类？并给出核心执行代码。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API，通过传入影像的 Asset ID（如 'CGIAR/SRTM90_V4'）加载影像并添加到地图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.exp` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.max 方法对 北京 地区进行 计算影像集在时间轴上的像元最大值？并给出核心执行代码。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD13A1/2018_06_10' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.compass` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.lanczos` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.disaggregate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.centeredCovariance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.area 方法对 伦敦 地区进行 精确计算几何图形在球面投影下的几何面积（平米）？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.draw 方法对 撒哈拉沙漠 地区进行 将矢量边界绘制为带颜色标记的RGB栅格影像以供展示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.rightShift` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Clusterer` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.cluster` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.clamp` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：编写 GEE Python API 代码下载指定的影像数据，获取其下载的 URL 链接或者直接下载为本地 Zip 压缩包（GeoTIFF 格式）。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD13A1/2018_06_10' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_4' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.spectralDilation` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.reduce 方法对 北京 地区进行 使用标准差规约器对影像集进行空间或时间维度的统计规约？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.contains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.float` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.int16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.sum 方法对 撒哈拉沙漠 地区进行 创建一个累加规约器进行积分和总量求和？并给出核心执行代码。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 对两个要素集合进行空间或属性上的连接（Join）操作。"}
+{"prompt": "编写最简代码加载 ee.FeatureCollection 空间资源"}
+{"prompt": "我想对 伦敦 地区做一次获取夜光影像。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.flatten` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.gte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.add 方法对 北京 地区进行 对整幅影像的所有像元进行加法补偿运算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toUint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.pad` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.trigamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.intersection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.log` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.wekaXMeans` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.libsvm` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_product` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.limit 方法对 亚马逊雨林 地区进行 限制影像集的最大返回影像数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.Or` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `isArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.bitwiseXor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.buffer` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ConfusionMatrix` 类的作用、用法及主要参数定义。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LC08/C02/T1_TOA/LC08_023038_20200510' 的波段均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.closestPoint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.bitwiseAnd` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `EncodableFunction.encode_invocation` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.rotate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.gte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setAssetAcl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.forEach` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Landcover cleanup.\n\nDisplay the MODIS land cover classification image with appropriate colors.\n\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-113.41842, 40.055489, 6)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `create_assets` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.paint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.union` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.toList 方法对 亚马逊雨林 地区进行 将前5幅影像提取并转换为客户端可遍历的List？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_iam_policy_to_acl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.round` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Image` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.clip 方法对 北京 地区进行 将影像根据指定区域的空间边界进行边界裁剪？并给出核心执行代码。"}
+{"prompt": "我想对 旧金山 地区做一次下载遥感数据。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.median 方法对 伦敦 地区进行 创建一个中位数规约器，适用于去除脉冲噪声？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `isNumber` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 北京 地区做一次全色影像融合。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Blob.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.add` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterBounds 方法对 亚马逊雨林 地区进行 按空间范围过滤与指定区域相交的影像集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.getVideoThumbURL` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getInfo` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceColumns 方法对 北京 地区进行 规约计算要素集多列的加权平均统计属性？并给出核心执行代码。"}
+{"prompt": "遍历 GEE 的 Sentinel-2 影像集合（前 2 张影像），并打印每一张影像的 system:index 编号"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.perimeter` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.trigamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.unmask` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `makeDownloadUrl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_task_id_to_operation_name` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.polynomial` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.bitwiseAnd` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.limit 方法对 北京 地区进行 限制并截取矢量要素集前50个要素输出？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_array 方法对 撒哈拉沙漠 地区进行 将影像集中各影像的标识名称提取为一个数组？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.sum 方法对 亚马逊雨林 地区进行 创建一个累加规约器进行积分和总量求和？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.atScale` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.unitScale` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ImageConverter` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_list_assets_result_to_get_list_result` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次进行图像分类。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Task.start` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 并挑选指定波段进行后续分析"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Create and render a feature collection from polygons.\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-107, 41, 6)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.area 方法对 北京 地区进行 精确计算几何图形在球面投影下的几何面积（平米）？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.subtract 方法对 北京 地区进行 对两幅影像进行像元级别的减法差异分析？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getAssetRootQuota` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toLong` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.cut` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.trim` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `CustomFunction.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Encodable.encode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.tanh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.map 方法对 亚马逊雨林 地区进行 在服务端循环为每一个矢量要素追加特定的分类标记？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.int8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.lt 方法对 亚马逊雨林 地区进行 对影像做小于阈值的二值化分割？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.geometry 方法对 旧金山 地区进行 获取矢量要素集整体合并后的总地理外包边界？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `image` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.isUnbounded` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次进行去云处理。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.unmask 方法对 撒哈拉沙漠 地区进行 对影像中被掩膜过滤的像元使用常量0进行填充？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.LineString 方法对 旧金山 地区进行 依据点集序列绘制一条直线段要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.pixelCoordinates` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `_ExpressionOptimizer.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ComputedObject` 类的作用、用法及主要参数定义。"}
+{"prompt": "实现：使用 GEE Python API 对两个要素集合进行空间或属性上的连接（Join）操作。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.digamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.replace` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.int8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.percentile` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API，对 Landsat 影像的不同部分使用不同的动态范围进行拉伸显示（例如陆地部分正常显示，水体部分高倍率拉伸以显现细节）。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.rotate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Terrain.aspect` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayFlatten` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次提取水体边界。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.loadGeoTIFF` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD09A1/2015_05_17' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapOverlay.CalcTiles` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toUint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mosaic 方法对 伦敦 地区进行 将影像集中的多幅无重叠影像无缝拼接？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.expression` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.getString` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.uint16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Compute hillshade from elevation.\"\"\"\n\nimport math\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-121.767, 46.852, 11)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filter 方法对 伦敦 地区进行 通过属性过滤器筛选出大面积的矢量公园？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.clip` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.atan2` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Classifier.smileRandomForest 方法对 旧金山 地区进行 初始化一个带100棵决策树的随机森林分类器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.lt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.And` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.contains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.get` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `image.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.intersects` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.map 方法对 撒哈拉沙漠 地区进行 在服务端循环为每一个矢量要素追加特定的分类标记？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toInt64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixToDiag` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.getThumbId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.resample 方法对 撒哈拉沙漠 地区进行 对影像进行双线性插值重采样？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.disjoint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.aspect 方法对 旧金山 地区进行 基于SRTM高程数据计算地形坡向？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `computeFeatures` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.repeat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayProject` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.countDistinctNonNull` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.cosh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API，使用众数滤波器（majority filter）或焦斑分析方法对土地覆被分类图（Landcover Classification）进行去噪和平滑处理。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mean 方法对 北京 地区进行 对影像集进行像元均值合成？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.toList 方法对 北京 地区进行 将前5幅影像提取并转换为客户端可遍历的List？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixMultiply` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：使用 GEE Python API，加载 'GOOGLE/EE/DEMOS/bart-locations' 湾区捷运站要素集，对每个要素生成 2000 米的缓冲区，合并所有缓冲区，并以颜色 '800080' 添加到地图上显示。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.toDictionary` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `CustomFunction.create` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.contains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.area` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.makeArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.bitwiseNot` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.transform` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.bitwiseOr` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.calendarRange` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 实现 HSV 影像融合（全色锐化）。将多光谱波段转换到 HSV 空间，用高分辨率全色波段替换 V 分量（亮度），再转回 RGB 空间，提高影像空间分辨率。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.mask 方法对 亚马逊雨林 地区进行 应用无云掩膜过滤掉影像中的云覆盖像元？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Number` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.first` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次提取海拔高度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getPixels` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.toArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.min 方法对 亚马逊雨林 地区进行 计算影像集在时间轴上的像元最小值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.geometries` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixDiagonal` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.repeat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.toList 方法对 伦敦 地区进行 将前10个矢量要素打包导出为可访问列表？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.getDownloadURL` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixDeterminant` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.draw 方法对 亚马逊雨林 地区进行 将矢量边界绘制为带颜色标记的RGB栅格影像以供展示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Terrain.hillShadow` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.toList 方法对 旧金山 地区进行 将前5幅影像提取并转换为客户端可遍历的List？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixPseudoInverse` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mosaic 方法对 北京 地区进行 将影像集中的多幅无重叠影像无缝拼接？并给出核心执行代码。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD09A1/2015_05_17' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.median 方法对 亚马逊雨林 地区进行 创建一个中位数规约器，适用于去除脉冲噪声？并给出核心执行代码。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD09A1/2015_05_17' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.disjoint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.map 方法对 伦敦 地区进行 在服务端对影像集的每幅影像执行映射计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.atan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.intervalMean` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toDouble` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.connectedPixelCount` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arraySlice` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.neighborhoodToBands` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.subtract 方法对 旧金山 地区进行 对两幅影像进行像元级别的减法差异分析？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.median` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `_Http.request` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.style 方法对 伦敦 地区进行 对矢量边界应用自定义样式配置进行图像显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.union 方法对 旧金山 地区进行 融合并合并矢量要素集中所有多边形为一个多边形？并给出核心执行代码。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 的波段均值"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.rangeContains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.min` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次计算面积大小。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.neighborhoodToArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.toImage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.cbrt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixMultiply` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.slice` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.indexOf` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.aspect 方法对 北京 地区进行 基于SRTM高程数据计算地形坡向？并给出核心执行代码。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 对两个要素集合进行空间或属性上的连接（Join）操作。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filterBounds 方法对 撒哈拉沙漠 地区进行 根据地理范围筛选相交的矢量要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `listImages` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getProjectConfig` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.nominalScale` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.random` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.mask` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.toList 方法对 北京 地区进行 将前10个矢量要素打包导出为可访问列表？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.LineString` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.dissolve` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.connectedComponents` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.expression 方法对 旧金山 地区进行 根据数学公式计算定制化的植被指数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.map 方法对 旧金山 地区进行 在服务端对影像集的每幅影像执行映射计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.cat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.linearRegression` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toShort` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `makeTableDownloadUrl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.style` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.first` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.gt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.select 方法对 亚马逊雨林 地区进行 从遥感影像中选择RGB可见光波段进行显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.draw 方法对 北京 地区进行 将矢量边界绘制为带颜色标记的RGB栅格影像以供展示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.And` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"FeatureCollection Join example.\n\nShow parks in San Francisco within 2 kilometers of a BART station.\n\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-122.45, 37.75, 13)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.sort` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `table.toCloudStorage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.closestPoint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `cancelTask` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.reduce 方法对 亚马逊雨林 地区进行 使用标准差规约器对影像集进行空间或时间维度的统计规约？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.rename` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sort 方法对 撒哈拉沙漠 地区进行 按云量属性对影像集进行升序排列？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getMapId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.bitwiseNot` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.classify 方法对 亚马逊雨林 地区进行 应用训练好的机器学习分类器对矢量要素集进行分类？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.mode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.multiply 方法对 北京 地区进行 对影像的浮点数像元进行乘法放大存储？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.getNumber` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.style 方法对 旧金山 地区进行 对矢量边界应用自定义样式配置进行图像显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.where` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API 中的 where 方法，根据特定掩膜条件（如高程、坡度等）对影像的像元值进行有条件替换。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.size 方法对 撒哈拉沙漠 地区进行 查询经过过滤后影像集中包含的影像总量？并给出核心执行代码。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `get_persistent_credentials` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.erfInv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.countEvery` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.equals` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_count_distinct` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixDiagonal` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.subtract` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `MapClient` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getDownloadId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.plus` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.eq` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.reduceNeighborhood` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.sin` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.select` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.multiply 方法对 旧金山 地区进行 对影像的浮点数像元进行乘法放大存储？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `UsingCloudApi` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.toList 方法对 旧金山 地区进行 将前10个矢量要素打包导出为可访问列表？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.metadata_` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.bitwiseNot` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toInt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `DateRange` 类的作用、用法及主要参数定义。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.first 方法对 旧金山 地区进行 获取影像集中按排序最靠前的一幅影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.indexOfSublist` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toInt16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `profiling` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceToImage 方法对 北京 地区进行 将矢量多边形转换为特定像元值的栅格图像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.index` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.transform` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.gamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.log10` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.distance 方法对 旧金山 地区进行 计算地表每个像元到矢量要素的最短距离生成距离影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.expression 方法对 北京 地区进行 根据数学公式计算定制化的植被指数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.coordinates` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.Not` 方法的作用、参数列表和使用规范。"}
+{"prompt": "编写最简代码加载 ee.FeatureCollection 空间资源"}
+{"prompt": "先验证数据集是否存在，然后完成任务：编写 GEE Python API 代码下载指定的影像数据，获取其下载的 URL 链接或者直接下载为本地 Zip 压缩包（GeoTIFF 格式）。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.reduceToImage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API，在 ImageCollection 影像集上通过 map 迭代应用数学计算表达式（如增强植被指数 EVI 计算公式），返回计算后的新波段集。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.normalizedDifference` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.equals` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Point 方法对 北京 地区进行 指定地理经纬度坐标，构建一个空间点要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `listFeatures` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.first 方法对 亚马逊雨林 地区进行 获取影像集中按排序最靠前的一幅影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `fromJSON` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.saveBest` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.toGeoJSON` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.int` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `PixelType` 类的作用、用法及主要参数定义。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次绿化情况分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.date` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `TileFetcher` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.add` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_array 方法对 亚马逊雨林 地区进行 将影像集中各影像的标识名称提取为一个数组？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.map 方法对 撒哈拉沙漠 地区进行 在服务端对影像集的每幅影像执行映射计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.limit 方法对 北京 地区进行 限制影像集的最大返回影像数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.multiply 方法对 伦敦 地区进行 对影像的浮点数像元进行乘法放大存储？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `CanUseDeprecated` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Polygon 方法对 亚马逊雨林 地区进行 根据首尾相接的坐标序列绘制矢量闭合多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ErrorMargin` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.neq` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `EncodableFunction.encode_cloud_invocation` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `createFolder` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterBounds 方法对 北京 地区进行 按空间范围过滤与指定区域相交的影像集？并给出核心执行代码。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Where operator example.\n\nSelect the forest classes from the MODIS land cover image and intersect them\nwith elevations above 1000m.\n\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-113.41842, 40.055489, 6)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.distance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `updateAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.glcmTexture` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.max 方法对 亚马逊雨林 地区进行 计算影像集在时间轴上的像元最大值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.lte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Geometry` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，从 SRTM90_V4 数字高程模型（DEM）数据中提取坡度(slope)与坡向(aspect)，并用余弦定理公式计算指定光源方向和角度下的山体阴影影像，最终渲染到地图上。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterDate 方法对 旧金山 地区进行 按时间日期筛选影像集中的元素？并给出核心执行代码。"}
+{"prompt": "实现：使用 GEE Python API，从 SRTM90_V4 数字高程模型（DEM）数据中提取坡度(slope)与坡向(aspect)，并用余弦定理公式计算指定光源方向和角度下的山体阴影影像，最终渲染到地图上。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.max` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.countDistinct` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.mosaic` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.count 方法对 旧金山 地区进行 创建一个有效像元计数规约器，评估无云覆盖概率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.byte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `PandasConverter` 类的作用、用法及主要参数定义。"}
+{"prompt": "我想对 旧金山 地区做一次全色影像融合。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getTaskStatus` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.toList 方法对 伦敦 地区进行 将前5幅影像提取并转换为客户端可遍历的List？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.signum` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.reduceRegion 方法对 亚马逊雨林 地区进行 计算影像指定区域的像元均值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.multiply 方法对 撒哈拉沙漠 地区进行 对影像的浮点数像元进行乘法放大存储？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.getNumber` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.spectralRegion` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_get_list_params_to_list_assets_params` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.laplacian8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.max 方法对 撒哈拉沙漠 地区进行 计算影像集在时间轴上的像元最大值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `image.toCloudStorage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.dayOfYear` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gt 方法对 北京 地区进行 对影像做大于阈值的二值化提取？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `startTableIngestion` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.getSignature` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toUint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `_ExpressionOptimizer` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ComputedObject.freeze` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API，使用众数滤波器（majority filter）或焦斑分析方法对土地覆被分类图（Landcover Classification）进行去噪和平滑处理。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.intersection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.forEachElement` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.histogram` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_mean 方法对 撒哈拉沙漠 地区进行 计算整个影像集中所有影像的平均云量？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Model.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Polygon 方法对 伦敦 地区进行 根据首尾相接的坐标序列绘制矢量闭合多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.aspect 方法对 伦敦 地区进行 基于SRTM高程数据计算地形坡向？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.circle` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `CustomFunction.getSignature` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.min 方法对 撒哈拉沙漠 地区进行 创建一个最小值规约器，寻找极值范围？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.kendallsCorrelation` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.reduce 方法对 旧金山 地区进行 使用标准差规约器对影像集进行空间或时间维度的统计规约？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Blob` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toByte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.allNonZero` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.union` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 旧金山 地区做一次获取夜光影像。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.size 方法对 伦敦 地区进行 查询矢量要素集中总共包含的要素个数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.eq` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.style 方法对 撒哈拉沙漠 地区进行 对矢量边界应用自定义样式配置进行图像显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.elementType` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayLength` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.size 方法对 旧金山 地区进行 查询经过过滤后影像集中包含的影像总量？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.clipToCollection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Flow.display_instructions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.identity` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.aggregate_sum 方法对 北京 地区进行 计算矢量要素集中所有要素的累计面积和？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Blob.url` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Map an expression.\n\nComputes the mean NDVI and SAVI by mapping an expression over a collection\nand taking the mean.  This intentionally exercises both variants of\nImage.expression.\n\"\"\"\n\nimport datetime\nimport ee\nimport ee.mapclient\n\nee.Initialize()\n\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.erf` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.notEquals` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.Or` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.resample 方法对 北京 地区进行 对影像进行双线性插值重采样？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.add 方法对 撒哈拉沙漠 地区进行 对整幅影像的所有像元进行加法补偿运算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.pixelLonLat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API，从 SRTM90_V4 数字高程模型（DEM）数据中提取坡度(slope)与坡向(aspect)，并用余弦定理公式计算指定光源方向和角度下的山体阴影影像，最终渲染到地图上。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gradient 方法对 亚马逊雨林 地区进行 计算灰度影像的横向和纵向梯度变化？并给出核心执行代码。"}
+{"prompt": "实现：使用 GEE Python API，在 ImageCollection 影像集上通过 map 迭代应用数学计算表达式（如增强植被指数 EVI 计算公式），返回计算后的新波段集。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `classifier` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.predicateCount` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.symmetricDifference` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.start` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.where 方法对 撒哈拉沙漠 地区进行 有条件地将符合条件的像元替换为特定像素值？并给出核心执行代码。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API，加载 'GOOGLE/EE/DEMOS/bart-locations' 湾区捷运站要素集，对每个要素生成 2000 米的缓冲区，合并所有缓冲区，并以颜色 '800080' 添加到地图上显示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `in_colab_shell` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixLUDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.aggregate_sum 方法对 旧金山 地区进行 计算矢量要素集中所有要素的累计面积和？并给出核心执行代码。"}
+{"prompt": "实现：使用 GEE Python API 加载影像集合，将其按几何边界裁剪，并计算合成影像（如中值合成 median），然后添加到地图展示。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，加载 'GOOGLE/EE/DEMOS/bart-locations' 湾区捷运站要素集，对每个要素生成 2000 米的缓冲区，合并所有缓冲区，并以颜色 '800080' 添加到地图上显示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toFloat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixSolve` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.isUnbounded` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.geometry 方法对 亚马逊雨林 地区进行 获取整个影像集联合后覆盖的最大地理空间范围？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.geometry 方法对 旧金山 地区进行 获取整个影像集联合后覆盖的最大地理空间范围？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.toList 方法对 亚马逊雨林 地区进行 将前10个矢量要素打包导出为可访问列表？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.asin` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.sort` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 北京 地区做一次下载遥感数据。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.count 方法对 亚马逊雨林 地区进行 创建一个有效像元计数规约器，评估无云覆盖概率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.resample 方法对 亚马逊雨林 地区进行 对影像进行双线性插值重采样？并给出核心执行代码。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API，从 SRTM90_V4 数字高程模型（DEM）数据中提取坡度(slope)与坡向(aspect)，并用余弦定理公式计算指定光源方向和角度下的山体阴影影像，最终渲染到地图上。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixSolve` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.acos` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.slice` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.centroid` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 的波段均值"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 中的 where 方法，根据特定掩膜条件（如高程、坡度等）对影像的像元值进行有条件替换。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Task.cancel` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.erfInv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.filterDate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.Zoom` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `authenticate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Task.active` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.aspect 方法对 撒哈拉沙漠 地区进行 基于SRTM高程数据计算地形坡向？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filter 方法对 旧金山 地区进行 使用复杂过滤器筛选低云量的影像集？并给出核心执行代码。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次绿化情况分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.errorMatrix` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getTaskList` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.divide 方法对 撒哈拉沙漠 地区进行 对缩放后的影像进行除法还原计算？并给出核心执行代码。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:32649，并提取像元值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.reduce 方法对 撒哈拉沙漠 地区进行 使用标准差规约器对影像集进行空间或时间维度的统计规约？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.mean 方法对 亚马逊雨林 地区进行 创建一个均值规约器用于像元或列数据合并？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.setDefaultProjection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_6' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `State` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.floor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.style 方法对 亚马逊雨林 地区进行 对矢量边界应用自定义样式配置进行图像显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `TableConverter` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_to_visualization_options` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.union 方法对 撒哈拉沙漠 地区进行 融合并合并矢量要素集中所有多边形为一个多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.getMapId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.copyProperties` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `renameAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.linkCollection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：编写 GEE Python API 代码下载指定的影像数据，获取其下载的 URL 链接或者直接下载为本地 Zip 压缩包（GeoTIFF 格式）。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.dissolve` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.displace` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.int64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.fastDistanceTransform` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.resample 方法对 旧金山 地区进行 对影像进行双线性插值重采样？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Model.fromAiPlatformPredictor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filter 方法对 旧金山 地区进行 通过属性过滤器筛选出大面积的矢量公园？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.mode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.format` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceToImage 方法对 亚马逊雨林 地区进行 将矢量多边形转换为特定像元值的栅格图像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.difference 方法对 撒哈拉沙漠 地区进行 求得两个空间几何图形剔除交叉部分后的差集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.linearFit` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.clip 方法对 伦敦 地区进行 将影像根据指定区域的空间边界进行边界裁剪？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.bitCount` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.geometry 方法对 亚马逊雨林 地区进行 获取矢量要素集整体合并后的总地理外包边界？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `centerMap` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.atan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.argmax` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.unmask 方法对 亚马逊雨林 地区进行 对影像中被掩膜过滤的像元使用常量0进行填充？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.randomPoints 方法对 伦敦 地区进行 在指定地理边界内生成100个随机坐标点要素集？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `canonicalize_name` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.signum` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.focalMedian` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Date` 类的作用、用法及主要参数定义。"}
+{"prompt": "编写最简代码加载 ee.Geometry.Point 空间资源"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.divide 方法对 伦敦 地区进行 对缩放后的影像进行除法还原计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.simple` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `TileFetcher.url_format` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toUint16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mean 方法对 撒哈拉沙漠 地区进行 对影像集进行像元均值合成？并给出核心执行代码。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API 加载影像集合，将其按几何边界裁剪，并计算合成影像（如中值合成 median），然后添加到地图展示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_sample_sd` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.apply` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.firstNonZero` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.qualityMosaic` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixDeterminant` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `image.toDrive` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `build_cloud_resource` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.spectralGradient` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请指出以下 GEE Python 代码中的错误或不规范之处，并给出修正后的正确代码以及详细解释：\n\n```python\nimport ee\nee.Initialize()\n\n# 加载影像集\ncollection = ee.ImageCollection('LANDSAT/LC08/C02/T1_TOA').limit(5)\n\n# 尝试用 python for 遍历影像集并计算平均值\nfor img in collection:\n    mean_val = img.reduceRegion(reducer=ee.Reducer.mean())\n    print(mean_val.getInfo())\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.GetViewport` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.gte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'COPERNICUS/S2_SR/20200720T104021_20200720T104022_T32TQD' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.edgesAreGeodesics` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.limit 方法对 撒哈拉沙漠 地区进行 限制影像集的最大返回影像数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mean 方法对 旧金山 地区进行 对影像集进行像元均值合成？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.where 方法对 伦敦 地区进行 有条件地将符合条件的像元替换为特定像素值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `startExternalImageIngestion` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.greaterThan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.classify` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `IdentityImageConverter` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.rsedTransform` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.And` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.erfc` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.divide 方法对 亚马逊雨林 地区进行 对缩放后的影像进行除法还原计算？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.unitRatio` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Model.fromVertexAi` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.sort 方法对 旧金山 地区进行 按面积降序对矢量要素集进行重排序？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.first` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sort 方法对 北京 地区进行 按云量属性对影像集进行升序排列？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.gamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `List` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.format` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：编写 GEE Python API 代码下载指定的影像数据，获取其下载的 URL 链接或者直接下载为本地 Zip 压缩包（GeoTIFF 格式）。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.And` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次下载遥感数据。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.set` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.wekaLVQ` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `_AlgorithmsContainer` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `State.active` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toLong` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 加载影像集合，将其按几何边界裁剪，并计算合成影像（如中值合成 median），然后添加到地图展示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MakeOverlay` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_mean 方法对 亚马逊雨林 地区进行 计算整个影像集中所有影像的平均云量？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.sort 方法对 北京 地区进行 按面积降序对矢量要素集进行重排序？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.mask 方法对 旧金山 地区进行 应用无云掩膜过滤掉影像中的云覆盖像元？并给出核心执行代码。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LC08/C02/T1_TOA/LC08_023038_20200510' 的波段均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toUint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.train` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.add 方法对 伦敦 地区进行 对整幅影像的所有像元进行加法补偿运算？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.precision` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.mean 方法对 北京 地区进行 创建一个均值规约器用于像元或列数据合并？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.lanczos` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_sources_to_one_platform_sources` 方法的作用、参数列表和使用规范。"}
+{"prompt": "编写最简代码加载 ee.Image 空间资源"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.rectangle` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.product` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.lt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mosaic 方法对 撒哈拉沙漠 地区进行 将影像集中的多幅无重叠影像无缝拼接？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gradient 方法对 伦敦 地区进行 计算灰度影像的横向和纵向梯度变化？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.stdDev 方法对 北京 地区进行 创建一个标准差规约器计算像元空间波动率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.toGeoJSONString` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Terrain.products` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.reduceRegion 方法对 撒哈拉沙漠 地区进行 计算影像指定区域的像元均值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.limit 方法对 亚马逊雨林 地区进行 限制并截取矢量要素集前50个要素输出？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.select 方法对 旧金山 地区进行 从遥感影像中选择RGB可见光波段进行显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setAssetProperties` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.blend` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API，在 ImageCollection 影像集上通过 map 迭代应用数学计算表达式（如增强植被指数 EVI 计算公式），返回计算后的新波段集。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.MultiPolygon` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.add` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.int32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.prepare_for_export` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.autoHistogram` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.getArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.gt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.first 方法对 撒哈拉沙漠 地区进行 获取影像集中按排序最靠前的一幅影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.geometry` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.leftShift` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.setGeometry` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toInt32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.float` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.map 方法对 北京 地区进行 在服务端对影像集的每幅影像执行映射计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.unmask 方法对 旧金山 地区进行 对影像中被掩膜过滤的像元使用常量0进行填充？并给出核心执行代码。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 实现 HSV 影像融合（全色锐化）。将多光谱波段转换到 HSV 空间，用高分辨率全色波段替换 V 分量（亮度），再转回 RGB 空间，提高影像空间分辨率。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.circularMean` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'COPERNICUS/S2_SR/20190825T102021_20190825T102022_T32TQD' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `computeValue` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.linkCollection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getThumbId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.stdDev 方法对 撒哈拉沙漠 地区进行 创建一个标准差规约器计算像元空间波动率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.getInfo` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.filterBounds` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'COPERNICUS/S2_SR/20210615T103021_20210615T103022_T32TQD' 并挑选指定波段进行后续分析"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.variance 方法对 旧金山 地区进行 创建一个方差规约器，度量计算数据离散度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.bitwiseAnd` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.int32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.first 方法对 伦敦 地区进行 获取影像集中按排序最靠前的一幅影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filter 方法对 伦敦 地区进行 使用复杂过滤器筛选低云量的影像集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.toCollection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:4326，并提取像元值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.erf` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.ResizeHandler` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.style 方法对 北京 地区进行 对矢量边界应用自定义样式配置进行图像显示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.unbounded` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.aspect 方法对 亚马逊雨林 地区进行 基于SRTM高程数据计算地形坡向？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.inner` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.classify` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `request_token` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.loadBigQueryTable` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.spearmansCorrelation` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_array 方法对 伦敦 地区进行 将影像集中各影像的标识名称提取为一个数组？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.confusionMatrix` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixCholeskyDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Computed area filter example.\n\nFind US counties smaller than 3k square kilometers in area.\n\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-119.7, 38.26, 7)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.hersDescriptor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，加载要素集并通过计算各要素的面积进行筛选过滤。具体为：加载 US 郡县数据，利用 area 方法计算每个郡县的面积，过滤保留面积大于 3000 平方公里的要素并可视化。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MYD13A1/2019_07_12' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayTranspose` 方法的作用、参数列表和使用规范。"}
+{"prompt": "遍历 GEE 的 Sentinel-2 影像集合（前 2 张影像），并打印每一张影像的 system:index 编号"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.contains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，对 Landsat 影像的不同部分使用不同的动态范围进行拉伸显示（例如陆地部分正常显示，水体部分高倍率拉伸以显现细节）。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，使用众数滤波器（majority filter）或焦斑分析方法对土地覆被分类图（Landcover Classification）进行去噪和平滑处理。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixQRDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.fscore` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.intersects` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.multiply` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.directionalDistanceTransform` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `table.toAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.combine` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `FeatureCollection` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.dimensions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.size 方法对 北京 地区进行 查询矢量要素集中总共包含的要素个数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.merge` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.buffer 方法对 撒哈拉沙漠 地区进行 为矢量要素集内的每个要素生成1公里缓冲区？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sum 方法对 亚马逊雨林 地区进行 对影像集沿时间轴进行像元值累加？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.erfInv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次进行去云处理。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.getInfo` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.clip 方法对 亚马逊雨林 地区进行 将影像根据指定区域的空间边界进行边界裁剪？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `computePixels` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.size 方法对 亚马逊雨林 地区进行 查询矢量要素集中总共包含的要素个数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.smileNaiveBayes` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Element` 类的作用、用法及主要参数定义。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Reverse mask a region.\n\nCreate an image that masks everything except for the specified polygon.\n\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-115, 39, 5)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixPseudoInverse` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.buffer 方法对 旧金山 地区进行 为矢量要素集内的每个要素生成1公里缓冲区？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.kurtosis` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `FeatureCollection.inverseDistance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.focalMean` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.closestPoints` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `String` 类的作用、用法及主要参数定义。"}
+{"prompt": "我想对 伦敦 地区做一次全色影像融合。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.clip 方法对 撒哈拉沙漠 地区进行 将影像根据指定区域的空间边界进行边界裁剪？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ServiceAccountCredentials` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.max 方法对 旧金山 地区进行 创建一个最大值规约器，提取特征最大响应？并给出核心执行代码。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API 从给定的多边形坐标列表创建 ee.Geometry，并将其包装为 ee.FeatureCollection 进行地图展示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.producersAccuracy` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.trigamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.subtract 方法对 亚马逊雨林 地区进行 对两幅影像进行像元级别的减法差异分析？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.rename 方法对 亚马逊雨林 地区进行 对影像的现有波段重命名？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.selfMask` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.bounds` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_to_image_file_format` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.stdDev 方法对 亚马逊雨林 地区进行 创建一个标准差规约器计算像元空间波动率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.toLowerCase` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toList` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getTableDownloadId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.mean 方法对 撒哈拉沙漠 地区进行 创建一个均值规约器用于像元或列数据合并？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.rename 方法对 撒哈拉沙漠 地区进行 对影像的现有波段重命名？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `table.toBigQuery` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.uint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.minMax` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.gt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getIamPolicy` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.distance 方法对 撒哈拉沙漠 地区进行 计算地表每个像元到矢量要素的最短距离生成距离影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `fromCloudApiJSON` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Export` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.tanh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.mod` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.LinearRing` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `GetAlgorithms` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.projection` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.advance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.bitsToArrayImage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.unboundFunctions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterBounds 方法对 旧金山 地区进行 按空间范围过滤与指定区域相交的影像集？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.notNull` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.robustLinearRegression` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次提取水体边界。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.limit 方法对 伦敦 地区进行 限制影像集的最大返回影像数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.size 方法对 伦敦 地区进行 查询经过过滤后影像集中包含的影像总量？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.variance 方法对 伦敦 地区进行 创建一个方差规约器，度量计算数据离散度？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.rightShift` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.reduceToVectors` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"HSV-based Pan-Sharpening example.\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\n\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.uint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.aggregate_mean 方法对 亚马逊雨林 地区进行 计算矢量要素集中所有要素的平均面积？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.closestPoints` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.tan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sum 方法对 北京 地区进行 对影像集沿时间轴进行像元值累加？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.lt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.simplify` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.subtract 方法对 撒哈拉沙漠 地区进行 对两幅影像进行像元级别的减法差异分析？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "计算遥感影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 的 B1 波段区域平均值并使用 Python if 语句判断是否大于 110"}
+{"prompt": "我想对 旧金山 地区做一次提取水体边界。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `init` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `image.toAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次计算面积大小。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.cluster` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `DeprecatedAsset` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.min` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.smileKNN` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `startIngestion` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.eq` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_mean 方法对 旧金山 地区进行 计算整个影像集中所有影像的平均云量？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.s2Cell` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.resample 方法对 伦敦 地区进行 对影像进行双线性插值重采样？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.dotProduct` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.limit 方法对 伦敦 地区进行 限制并截取矢量要素集前50个要素输出？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.join` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixLUDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.toList` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.digamma` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixTrace` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.combine` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Buffer Example.\n\nDisplay the area within 2 kilometers of any San Francisco BART station.\n\"\"\"\n\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-122.4, 37.7, 11)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.toList` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.formaTrend` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.distinct` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.call_` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.flatten` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_histogram` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.gammainc` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `exportImage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getAssetAcl` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixTranspose` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.wekaCobweb` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.bounds 方法对 伦敦 地区进行 计算包含当前几何要素的最小外包矩形边界？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getAlgorithms` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.reduceRegions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.intersection 方法对 撒哈拉沙漠 地区进行 计算当前几何要素与另一图形的空间交集区域？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Handler` 类的作用、用法及主要参数定义。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.Or` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.medialAxis` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.hersFeature` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次提取海拔高度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.atan2` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gt 方法对 亚马逊雨林 地区进行 对影像做大于阈值的二值化提取？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mosaic 方法对 亚马逊雨林 地区进行 将影像集中的多幅无重叠影像无缝拼接？并给出核心执行代码。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.length` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.zeroCrossing` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.split` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次提取水体边界。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.int64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gradient 方法对 北京 地区进行 计算灰度影像的横向和纵向梯度变化？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.difference` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixInverse` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.square` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.percentile 方法对 撒哈拉沙漠 地区进行 创建一个用于计算25和75分位数的规约器？并给出核心执行代码。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_0' 转换为小写格式并在客户端输出"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.reduce` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `decode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.KeypressHandler` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 实现 HSV 影像融合（全色锐化）。将多光谱波段转换到 HSV 空间，用高分辨率全色波段替换 V 分量（亮度），再转回 RGB 空间，提高影像空间分辨率。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `exportVideo` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.int16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.sinh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.geometry 方法对 北京 地区进行 获取矢量要素集整体合并后的总地理外包边界？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.unzip` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 筛选 Landsat 影像集（按日期、空间边界过滤），然后计算中值合成影像，并对其做色彩可视化配置后添加到地图上。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Terrain.fillMinima` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toInt64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 统计要素集合（FeatureCollection）中包含的矢量要素数量。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 的波段均值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.expression 方法对 伦敦 地区进行 根据数学公式计算定制化的植被指数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.abs` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ComputedObject.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.median 方法对 旧金山 地区进行 创建一个中位数规约器，适用于去除脉冲噪声？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.eigen` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 北京 地区做一次进行图像分类。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sum 方法对 撒哈拉沙漠 地区进行 对影像集沿时间轴进行像元值累加？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.difference 方法对 伦敦 地区进行 求得两个空间几何图形剔除交叉部分后的差集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.addBands 方法对 北京 地区进行 将常数层作为一个新波段追加到原影像中？并给出核心执行代码。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Filter an image collection by date and region to make a median composite.\n\nSee also: Clipped composite, which crops the output image\ninstead of filtering the input collection.\n\"\"\"\n\nimport datetime\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-110, 40, 5)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `_WorkloadTag.validate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 伦敦 地区做一次绿化情况分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.splice` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.floor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.uint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "实现：使用 GEE Python API 中的 where 方法，根据特定掩膜条件（如高程、坡度等）对影像的像元值进行有条件替换。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.Flush` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Function.call` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getThumbnail` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 的波段均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.getString` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.euclidean` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LE07/C02/T1_TOA/LE07_044034_20020811' 的波段均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toShort` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.convexHull` 方法的作用、参数列表和使用规范。"}
+{"prompt": "遍历 GEE 的 Sentinel-2 影像集合（前 4 张影像），并打印每一张影像的 system:index 编号"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API 统计要素集合（FeatureCollection）中包含的矢量要素数量。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.sinh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.getFraction` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'COPERNICUS/S2_SR/20200720T104021_20200720T104022_T32TQD' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sort 方法对 旧金山 地区进行 按云量属性对影像集进行升序排列？并给出核心执行代码。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次全色影像融合。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.slope 方法对 北京 地区进行 基于SRTM高程数据计算地形坡度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixInverse` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.union` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_count` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MYD13A1/2019_07_12' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.slope 方法对 亚马逊雨林 地区进行 基于SRTM高程数据计算地形坡度？并给出核心执行代码。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 对指定边界外的要素进行掩膜过滤，实现反向掩膜效果。"}
+{"prompt": "运行代码并修正潜在错误，实现：使用 GEE Python API 筛选 Landsat 影像集（按日期、空间边界过滤），然后计算中值合成影像，并对其做色彩可视化配置后添加到地图上。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API，在 ImageCollection 影像集上通过 map 迭代应用数学计算表达式（如增强植被指数 EVI 计算公式），返回计算后的新波段集。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:4326，并提取像元值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.union 方法对 北京 地区进行 融合并合并矢量要素集中所有多边形为一个多边形？并给出核心执行代码。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayArgmax` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.erfcInv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.order` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.reduceRegion 方法对 北京 地区进行 计算影像指定区域的像元均值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `classifier.toAsset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.max` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.union 方法对 亚马逊雨林 地区进行 融合并合并矢量要素集中所有多边形为一个多边形？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.geometry 方法对 北京 地区进行 获取整个影像集联合后覆盖的最大地理空间范围？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.int32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `exportTable` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.copyProperties` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.rgbToHsv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.long` 方法的作用、参数列表和使用规范。"}
+{"prompt": "遍历 GEE 的 Sentinel-2 影像集合（前 4 张影像），并打印每一张影像的 system:index 编号"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.pow` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `classifier.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 的波段均值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.min 方法对 北京 地区进行 创建一个最小值规约器，寻找极值范围？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.size` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.intersection 方法对 旧金山 地区进行 计算当前几何要素与另一图形的空间交集区域？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayDotProduct` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.buffer` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Clusterer.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.greaterThanOrEquals` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.disjoint` 方法的作用、参数列表和使用规范。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Count features example.\n\nCount Panoramio photos near SF that mention bridges.\n\"\"\"\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-122.39, 37.7857, 12)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filterDate 方法对 北京 地区进行 按时间筛选特定日期范围内的矢量要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.median 方法对 旧金山 地区进行 对影像集进行像元中位数合成，用于去除噪点？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.apply_` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.uint16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_sample_var` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次提取海拔高度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `resetWorkloadTag` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.uint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.min` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 旧金山 地区做一次进行图像分类。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.dateRangeContains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API，加载 'GOOGLE/EE/DEMOS/bart-locations' 湾区捷运站要素集，对每个要素生成 2000 米的缓冲区，合并所有缓冲区，并以颜色 '800080' 添加到地图上显示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.LoadTiles` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.sample` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `build_ingestion_time_parameters` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.toUpperCase` 方法的作用、参数列表和使用规范。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 加载影像集合，将其按几何边界裁剪，并计算合成影像（如中值合成 median），然后添加到地图展示。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.focalMode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "计算遥感影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 的 B1 波段区域平均值并使用 Python if 语句判断是否大于 30"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.rename 方法对 北京 地区进行 对影像的现有波段重命名？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setIamPolicy` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filter 方法对 撒哈拉沙漠 地区进行 通过属性过滤器筛选出大面积的矢量公园？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.get` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.distance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.randomColumn` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.LineString 方法对 亚马逊雨林 地区进行 依据点集序列绘制一条直线段要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.byte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filterBounds 方法对 旧金山 地区进行 根据地理范围筛选相交的矢量要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.reduceRegion` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.filterMetadata` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 北京 地区做一次计算面积大小。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixFnorm` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.stdDev` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.uint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceToImage 方法对 旧金山 地区进行 将矢量多边形转换为特定像元值的栅格图像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.LineString 方法对 撒哈拉沙漠 地区进行 依据点集序列绘制一条直线段要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ApiTestCase` 类的作用、用法及主要参数定义。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.metadata` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.geometry 方法对 撒哈拉沙漠 地区进行 获取矢量要素集整体合并后的总地理外包边界？并给出核心执行代码。"}
+{"prompt": "我想对 伦敦 地区做一次监测变化情况。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.buffer 方法对 亚马逊雨林 地区进行 为矢量要素集内的每个要素生成1公里缓冲区？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.bitCount` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.double` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.aggregate_sum 方法对 撒哈拉沙漠 地区进行 计算矢量要素集中所有要素的累计面积和？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.variance 方法对 北京 地区进行 创建一个方差规约器，度量计算数据离散度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.CompositeTiles` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayReduce` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `MapOverlay` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.shuffle` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.pow` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.bounds` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filterDate 方法对 亚马逊雨林 地区进行 按时间筛选特定日期范围内的矢量要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `updateProjectConfig` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.derivative` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `table.toFeatureView` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filterDate 方法对 撒哈拉沙漠 地区进行 按时间筛选特定日期范围内的矢量要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.max 方法对 亚马逊雨林 地区进行 创建一个最大值规约器，提取特征最大响应？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.DragHandler` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `builder` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.centroid 方法对 北京 地区进行 计算当前几何图形的重心中心点坐标位置？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.variance 方法对 撒哈拉沙漠 地区进行 创建一个方差规约器，度量计算数据离散度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `workloadTagContext` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.addBands 方法对 亚马逊雨林 地区进行 将常数层作为一个新波段追加到原影像中？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Function.nameArgs` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.spectralDistance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.sensSlope` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.aggregate_array 方法对 北京 地区进行 将影像集中各影像的标识名称提取为一个数组？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.hypot` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `table` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `toReadableJSON` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.size` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.log10` 方法的作用、参数列表和使用规范。"}
+{"prompt": "编写最简代码加载 ee.FeatureCollection 空间资源"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getFeatureViewTilesKey` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.count 方法对 撒哈拉沙漠 地区进行 创建一个有效像元计数规约器，评估无云覆盖概率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.draw` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.log10` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Classifier.smileRandomForest 方法对 伦敦 地区进行 初始化一个带100棵决策树的随机森林分类器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.reduceResolution` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.fixed` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.constant` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ComputedObject.getInfo` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.ceil` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.classify 方法对 撒哈拉沙漠 地区进行 应用训练好的机器学习分类器对矢量要素集进行分类？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.decisionTreeEnsemble` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.add` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toInt16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.fromS2CellId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.combine_` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Encodable` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ErrorMargin.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.rename` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gt 方法对 伦敦 地区进行 对影像做大于阈值的二值化提取？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.diamond` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.normalizedDifference 方法对 北京 地区进行 计算影像的归一化植被指数NDVI？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.prewitt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.simplify` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mean 方法对 亚马逊雨林 地区进行 对影像集进行像元均值合成？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.mean 方法对 伦敦 地区进行 对影像集进行像元均值合成？并给出核心执行代码。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.sldStyle` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `getAssetRoots` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.linearFit 方法对 亚马逊雨林 地区进行 创建一个用于一元回归分析计算变化率斜率的规约器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ApiFunction.clearApi` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.count` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.rgb` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.erfcInv` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.octagon` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MYD13A1/2019_07_12' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.hersDescriptor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.Point` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.countRuns` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.gradient` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sort 方法对 亚马逊雨林 地区进行 按云量属性对影像集进行升序排列？并给出核心执行代码。"}
+{"prompt": "加载遥感影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 并挑选指定波段进行后续分析"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 温度反演分析，具体要求：提取地表温度（LST），并计算其空间均值分布。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `TileFetcher.format_tile_url` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.aggregate_total_var` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toUint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.bitwiseXor` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次监测变化情况。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.cast` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayCat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.distance 方法对 北京 地区进行 计算地表每个像元到矢量要素的最短距离生成距离影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterDate 方法对 撒哈拉沙漠 地区进行 按时间日期筛选影像集中的元素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.update` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.randomVisualizer` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.linearFit 方法对 撒哈拉沙漠 地区进行 创建一个用于一元回归分析计算变化率斜率的规约器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.lt 方法对 撒哈拉沙漠 地区进行 对影像做小于阈值的二值化分割？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.uint16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.last` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `computeImages` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.map` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `SecondOrderFunction` 类的作用、用法及主要参数定义。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次全色影像融合。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `NumPyConverter` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gradient 方法对 撒哈拉沙漠 地区进行 计算灰度影像的横向和纵向梯度变化？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Function` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.bitwiseOr` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.firstNonZero` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filter 方法对 北京 地区进行 使用复杂过滤器筛选低云量的影像集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.slope 方法对 伦敦 地区进行 基于SRTM高程数据计算地形坡度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.interpolate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `toJSON` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.percentile 方法对 伦敦 地区进行 创建一个用于计算25和75分位数的规约器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.containedIn` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.select` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.Not` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.min` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.divide 方法对 北京 地区进行 对缩放后的影像进行除法还原计算？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceColumns 方法对 旧金山 地区进行 规约计算要素集多列的加权平均统计属性？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.addBands` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.select` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.uint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 SRTM DEM 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 高程与坡度分析，具体要求：提取地形坡度与坡向图层，并按坡度大于20度区域对植被覆盖情况进行分析。"}
+{"prompt": "查阅相关API并实现：使用 GEE Python API 筛选 Landsat 影像集（按日期、空间边界过滤），然后计算中值合成影像，并对其做色彩可视化配置后添加到地图上。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.merge` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 从给定的多边形坐标列表创建 ee.Geometry，并将其包装为 ee.FeatureCollection 进行地图展示。"}
+{"prompt": "将 Landsat-8 影像集合（前 5 张）按特定矩形区域边界进行批量空间裁剪"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.limit 方法对 旧金山 地区进行 限制并截取矢量要素集前50个要素输出？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ImageCollection` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `video.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toUint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.getString` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterDate 方法对 亚马逊雨林 地区进行 按时间日期筛选影像集中的元素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.remap` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Polygon 方法对 旧金山 地区进行 根据首尾相接的坐标序列绘制矢量闭合多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `String.decodeJSON` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.ridgeRegression` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.containsAll` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toByte` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.sobel` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.reduce` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Dictionary.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toInt32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setWorkloadTag` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.geometricMedian` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.uint32` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.map 方法对 伦敦 地区进行 在服务端循环为每一个矢量要素追加特定的分类标记？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.sinh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.distance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.load` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.randomPoints 方法对 亚马逊雨林 地区进行 在指定地理边界内生成100个随机坐标点要素集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.min 方法对 北京 地区进行 计算影像集在时间轴上的像元最小值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.sort 方法对 伦敦 地区进行 按云量属性对影像集进行升序排列？并给出核心执行代码。"}
+{"prompt": "计算遥感影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 的 B1 波段区域平均值并使用 Python if 语句判断是否大于 10"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapOverlay.PutCacheTile` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.entropy` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.bounds 方法对 亚马逊雨林 地区进行 计算包含当前几何要素的最小外包矩形边界？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.insert` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'LANDSAT/LC08/C02/T1_TOA/LC08_044034_20140318' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.min` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.multiply` 方法的作用、参数列表和使用规范。"}
+{"prompt": "计算遥感影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 的 B1 波段区域平均值并使用 Python if 语句判断是否大于 70"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.expression 方法对 撒哈拉沙漠 地区进行 根据数学公式计算定制化的植被指数？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayAccum` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayGet` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_5' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.reduce 方法对 伦敦 地区进行 使用标准差规约器对影像集进行空间或时间维度的统计规约？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_to_band_list` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.area 方法对 撒哈拉沙漠 地区进行 精确计算几何图形在球面投影下的几何面积（平米）？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Collection` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filter 方法对 北京 地区进行 通过属性过滤器筛选出大面积的矢量公园？并给出核心执行代码。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"Composite an image collection and clip it to a boundary from a table.\n\nSee also: Filtered Seasonal Composite, which filters the\ncollection by bounds instead.\n\"\"\"\n\nimport datetime\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-120, 37, 6)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `encode` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.loadTable` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.addBands 方法对 撒哈拉沙漠 地区进行 将常数层作为一个新波段追加到原影像中？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_asset_id_to_asset_name` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Earth Engine 字符串对象 'Sentinel-2_No_7' 转换为小写格式并在客户端输出"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.median 方法对 北京 地区进行 创建一个中位数规约器，适用于去除脉冲噪声？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.min 方法对 伦敦 地区进行 创建一个最小值规约器，寻找极值范围？并给出核心执行代码。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API，加载要素集并通过计算各要素的面积进行筛选过滤。具体为：加载 US 郡县数据，利用 area 方法计算每个郡县的面积，过滤保留面积大于 3000 平方公里的要素并可视化。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.gt 方法对 撒哈拉沙漠 地区进行 对影像做大于阈值的二值化提取？并给出核心执行代码。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.bounds 方法对 旧金山 地区进行 计算包含当前几何要素的最小外包矩形边界？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.exp` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.double` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.sampleRegions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapOverlay.Flush` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.log` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.errorMatrix 方法对 亚马逊雨林 地区进行 基于两属性计算分类混淆矩阵？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.atan2` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.pow` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.bitwiseOr` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Feature.withinDistance` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD13A1/2018_06_10' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.cos` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 旧金山 地区做一次绿化情况分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toDouble` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.displacement` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.cos` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 植被指数分析，具体要求：计算长期月均NDVI时序变化，并分析变化趋势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixFnorm` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.exp` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.classify 方法对 旧金山 地区进行 应用训练好的机器学习分类器对矢量要素集进行分类？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.buffer 方法对 北京 地区进行 为矢量要素集内的每个要素生成1公里缓冲区？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `setCloudApiKey` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.filterDate 方法对 北京 地区进行 按时间日期筛选影像集中的元素？并给出核心执行代码。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API 筛选 Landsat 影像集（按日期、空间边界过滤），然后计算中值合成影像，并对其做色彩可视化配置后添加到地图上。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixCholeskyDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.maxValue` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `GeoPandasConverter` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ComputedObject.serialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API，通过传入影像的 Asset ID（如 'CGIAR/SRTM90_V4'）加载影像并添加到地图。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.difference 方法对 亚马逊雨林 地区进行 求得两个空间几何图形剔除交叉部分后的差集？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.filter` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.count 方法对 北京 地区进行 创建一个有效像元计数规约器，评估无云覆盖概率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.sum` 方法的作用、参数列表和使用规范。"}
+{"prompt": "请使用 Google Earth Engine (GEE) Python API 编写代码，完成以下任务：使用 GEE Python API 统计要素集合（FeatureCollection）中包含的矢量要素数量。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `get_authorization_url` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ComputedObject.name` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.double` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.listContains` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.matrixSingularValueDecomposition` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.getMapId` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_params_to_image_manifest` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `Reducer` 类的作用、用法及主要参数定义。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次监测变化情况。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayReshape` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:32649，并提取像元值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapOverlay.GetCachedTile` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.clip 方法对 旧金山 地区进行 将影像根据指定区域的空间边界进行边界裁剪？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toInt16` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.inList` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `TileFetcher.run` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.sampleStdDev` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.int` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.millis` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.distance 方法对 伦敦 地区进行 计算地表每个像元到矢量要素的最短距离生成距离影像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Geometry.length` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Date.parse` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceColumns 方法对 撒哈拉沙漠 地区进行 规约计算要素集多列的加权平均统计属性？并给出核心执行代码。"}
+{"prompt": "编写最简代码加载 ee.Geometry.Point 空间资源"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.min 方法对 伦敦 地区进行 计算影像集在时间轴上的像元最小值？并给出核心执行代码。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:32649，并提取像元值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.float` 方法的作用、参数列表和使用规范。"}
+{"prompt": "将 Landsat-8 影像重投影至对应的投影坐标系 EPSG:4326，并提取像元值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.where 方法对 亚马逊雨林 地区进行 有条件地将符合条件的像元替换为特定像素值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Point 方法对 旧金山 地区进行 指定地理经纬度坐标，构建一个空间点要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `PixelType.minValue` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Element.getArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.kirsch` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `map.toCloudStorage` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.min 方法对 旧金山 地区进行 计算影像集在时间轴上的像元最小值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.roberts` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.filter 方法对 亚马逊雨林 地区进行 通过属性过滤器筛选出大面积的矢量公园？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.visualize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.mean 方法对 伦敦 地区进行 创建一个均值规约器用于像元或列数据合并？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.neq` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.chebyshev` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.bitwiseAnd` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.min 方法对 撒哈拉沙漠 地区进行 计算影像集在时间轴上的像元最小值？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.run` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.map 方法对 旧金山 地区进行 在服务端循环为每一个矢量要素追加特定的分类标记？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.slope 方法对 旧金山 地区进行 基于SRTM高程数据计算地形坡度？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.union 方法对 撒哈拉沙漠 地区进行 将两个相连的空间几何区域融合成一个大地理多边形？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.cosh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.hasType` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 亚马逊雨林 地区做一次获取夜光影像。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ConfusionMatrix.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.toInt8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.cos` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.ReleaseHandler` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.intersects` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.bitsToArray` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.toList 方法对 撒哈拉沙漠 地区进行 将前10个矢量要素打包导出为可访问列表？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `reset` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Flow.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.transpose` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapClient.ClickHandler` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.first` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.uint8` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.percentile 方法对 北京 地区进行 创建一个用于计算25和75分位数的规约器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_acl_to_iam_policy` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.sort 方法对 亚马逊雨林 地区进行 按面积降序对矢量要素集进行重排序？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `MapOverlay.getTile` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-1 数据集，编写 GEE Python API 脚本，在 伦敦 地区（空间坐标经纬度: [-0.1, 51.5]）进行 洪水灾害提取，具体要求：利用雷达影像在洪水前后时相的差值，提取洪涝淹没边界并统计面积。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.sqrt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 土地覆被分类，具体要求：多特征土地利用监督分类，并用混淆矩阵评估精度。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.Point 方法对 伦敦 地区进行 指定地理经纬度坐标，构建一个空间点要素？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayMask` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_to_grid_dimensions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Decorator` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `convert_algorithms` 方法的作用、参数列表和使用规范。"}
+{"prompt": "我想对 撒哈拉沙漠 地区做一次计算面积大小。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Export.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.cat` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.fixedHistogram` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.schema` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Image.normalizedDifference 方法对 伦敦 地区进行 计算影像的归一化植被指数NDVI？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.arrayDimensions` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.mod` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.toInt64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.lastIndexOfSubList` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Join.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.log` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.divide` 方法的作用、参数列表和使用规范。"}
+{"prompt": "编写最简代码加载 ee.FeatureCollection 空间资源"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.draw 方法对 伦敦 地区进行 将矢量边界绘制为带颜色标记的RGB栅格影像以供展示？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.double` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.linearFit 方法对 伦敦 地区进行 创建一个用于一元回归分析计算变化率斜率的规约器？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Function.promoteArgs` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 海岸线演变监测，具体要求：提取20年间的水体边界，计算海岸线位移矢量并生成缓冲区分析。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Number.int64` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 城市热岛效应分析，具体要求：结合NDVI指数与LST温度，分析城市建成区和郊区的热量分布差异及热岛强度。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.toInt` 方法的作用、参数列表和使用规范。"}
+{"prompt": "先验证数据集是否存在，然后完成任务：使用 GEE Python API 对两个要素集合进行空间或属性上的连接（Join）操作。"}
+{"prompt": "补全以下 GEE Python API 脚本，使其完整运行并实现对应功能：\n### 待补全代码：\n```python\n\"\"\"HDR Landsat.\n\nDisplay portions of an image with different dynamic ranges.\nThe land areas are displayed normally, but the water areas\nare stretched to show more details.\n\"\"\"\n\nimport datetime\nimport ee\nimport ee.mapclient\n\nee.Initialize()\nee.mapclient.centerMap(-95.738, 18.453, 9)\n\n# TODO: 补全后续的 Earth Engine 核心运算与图层添加逻辑\n```"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 FeatureCollection.reduceToImage 方法对 撒哈拉沙漠 地区进行 将矢量多边形转换为特定像元值的栅格图像？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.rightShift` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 ImageCollection.median 方法对 撒哈拉沙漠 地区进行 对影像集进行像元中位数合成，用于去除噪点？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Array.divide` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 旧金山 地区（空间坐标经纬度: [-122.4, 37.7]）进行 森林覆盖退化分析，具体要求：计算近5年林地退化情况，导出年度退化面积统计图。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 撒哈拉沙漠 地区（空间坐标经纬度: [12.5, 23.4]）进行 冰川消融统计，具体要求：对比两个时期的雪冰覆盖率，提取冰川消融斑块并统计其球体投影面积。"}
+{"prompt": "实现：使用 GEE Python API 实现 HSV 影像融合（全色锐化）。将多光谱波段转换到 HSV 空间，用高分辨率全色波段替换 V 分量（亮度），再转回 RGB 空间，提高影像空间分辨率。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Collection.map` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Projection.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `nameToClass` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `DateRange.initialize` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请介绍 `ApiFunction` 类的作用、用法及主要参数定义。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.eq` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Landsat 8 数据集，编写 GEE Python API 脚本，在 北京 地区（空间坐标经纬度: [116.4, 39.9]）进行 水体变化检测，具体要求：提取双时相影像水体面积变化并计算差异面积。"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Geometry.centroid 方法对 伦敦 地区进行 计算当前几何图形的重心中心点坐标位置？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Filter.lessThan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Reducer.fixed2DHistogram` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.inverse` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.matrixToDiag` 方法的作用、参数列表和使用规范。"}
+{"prompt": "基于 Sentinel-2 数据集，编写 GEE Python API 脚本，在 亚马逊雨林 地区（空间坐标经纬度: [-62.2, -3.4]）进行 农作物长势监测，具体要求：对生育期内的EVI指数进行中值合成，并统计各农作物的平均长势。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.atan` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在特定空间范围内计算 Landsat-8 影像 'LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900615' 的波段均值"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Kernel.__init__` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Classifier.smileGradientTreeBoost` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感数据集 'MODIS/006/MOD13A1/2018_06_10' 并计算特定点缓冲区内的 NDVI 均值"}
+{"prompt": "在 Google Earth Engine Python API 中，如何使用 Reducer.stdDev 方法对 伦敦 地区进行 创建一个标准差规约器计算像元空间波动率？并给出核心执行代码。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `ImageCollection.Or` 方法的作用、参数列表和使用规范。"}
+{"prompt": "加载遥感影像 'COPERNICUS/S2_SR/20190825T102021_20190825T102022_T32TQD' 并挑选指定波段进行后续分析"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.cosh` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `List.iterate` 方法的作用、参数列表和使用规范。"}
+{"prompt": "在 Google Earth Engine (GEE) Python API 中，请解释 `Image.cumulativeCost` 方法的作用、参数列表和使用规范。"}

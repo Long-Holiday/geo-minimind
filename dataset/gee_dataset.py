@@ -106,8 +106,21 @@ class GEERLDataset(Dataset):
 
 if __name__ == '__main__':
     from transformers import AutoTokenizer
+    import os
     print("Loading Qwen tokenizer...")
-    tokenizer = AutoTokenizer.from_pretrained('Qwen/Qwen2.5-Coder-0.5B-Instruct')
+    model_path = 'Qwen/Qwen2.5-Coder-0.5B-Instruct'
+    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
+    local_pretrained = "/home/default_user/geo-minimind/pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
+    kwargs = {}
+    if os.path.exists(modelscope_cache):
+        model_path = modelscope_cache
+        kwargs["local_files_only"] = True
+    elif os.path.exists(local_pretrained):
+        model_path = local_pretrained
+        kwargs["local_files_only"] = True
+        
+    print(f"Loading Qwen tokenizer from {model_path}...")
+    tokenizer = AutoTokenizer.from_pretrained(model_path, **kwargs)
     # 确保 pad_token_id 存在
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token

@@ -140,19 +140,26 @@ def save_checkpoint(model, optimizer, step, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(description="GRPO Alignment for Qwen2.5-Coder GEE")
-    parser.add_argument("--model_name_or_path", type=str, default="pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct")
+    parser.add_argument("--model_name_or_path", "--model_path", type=str, default="pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct",
+                        dest="model_name_or_path", help="Base model name or path")
+    parser.add_argument("--data_path", type=str, default="./data/gee_rl_prompts_train.jsonl",
+                        help="Path to RL training prompts jsonl file")
     parser.add_argument("--from_resume", action="store_true", help="Resume training from latest checkpoint")
-    parser.add_argument("--output_dir", type=str, default="./out/qwen_grpo")
-    parser.add_argument("--num_epochs", type=int, default=3)
-    parser.add_argument("--lr", type=float, default=5e-6)
+    parser.add_argument("--output_dir", type=str, default="./out/qwen_grpo", help="Output directory")
+    parser.add_argument("--num_epochs", "--epochs", type=int, default=3, dest="num_epochs", help="Number of training epochs")
+    parser.add_argument("--lr", "--learning_rate", type=float, default=5e-6, dest="lr", help="Learning rate")
+    parser.add_argument("--batch_size", type=int, default=1, help="Batch size (currently kept as 1 to avoid sequence padding in dataloader)")
     parser.add_argument("--beta", type=float, default=0.01, help="KL penalty coefficient")
     parser.add_argument("--epsilon", type=float, default=0.2, help="Clipping parameter for GRPO")
     parser.add_argument("--ppo_epochs", type=int, default=1, help="Number of policy updates per batch")
     parser.add_argument("--num_generations", type=int, default=4, help="Number of generations per prompt")
-    parser.add_argument("--save_steps", type=int, default=10, help="Steps between checkpoints")
+    parser.add_argument("--save_steps", "--save_interval", type=int, default=10, dest="save_steps", help="Steps between checkpoints")
     parser.add_argument("--log_steps", type=int, default=1, help="Steps between logs")
+    parser.add_argument("--max_seq_len", type=int, default=1024, help="Maximum prompt sequence length")
+    parser.add_argument("--max_gen_len", type=int, default=512, help="Maximum generated sequence length")
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--use_wandb", action="store_true", help="Enable Wandb tracking")
+    parser.add_argument("--wandb_project", type=str, default="geo-minimind-grpo", help="Wandb project name")
     parser.add_argument("--use_swanlab", action="store_true", help="Enable Swanlab tracking")
     args = parser.parse_args()
 
@@ -161,23 +168,32 @@ def main():
 
     # 1. 确保 Mock 数据及路径存在
     create_mock_data()
-    rl_prompts_path = "./data/gee_rl_prompts_train.jsonl"
+    rl_prompts_path = args.data_path
 
     # 2. 确定模型路径
     model_path = "out/qwen_sft_merged"
     if not os.path.exists(model_path) or not os.listdir(model_path):
         modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-0.5B-Instruct")
-        local_pretrained = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
+        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-0.5B-Instruct"
+        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"
         if os.path.exists(modelscope_cache):
             print(f"SFT merged model not found. Using local ModelScope cache: {modelscope_cache}")
             model_path = modelscope_cache
         elif os.path.exists(local_pretrained):
             print(f"SFT merged model not found. Using local pre-downloaded model at {local_pretrained}")
             model_path = local_pretrained
+        elif os.path.exists(local_pretrained_alt):
+            print(f"SFT merged model not found. Using local pre-downloaded model at {local_pretrained_alt}")
+            model_path = local_pretrained_alt
         else:
             fallback_path = args.model_name_or_path
-            if fallback_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct"] and os.path.exists(modelscope_cache):
-                fallback_path = modelscope_cache
+            if fallback_path in ["Qwen/Qwen2.5-Coder-0.5B-Instruct", "qwen/Qwen2.5-Coder-0.5B-Instruct", "pretrained_models/Qwen/Qwen2___5-Coder-0___5B-Instruct"]:
+                if os.path.exists(modelscope_cache):
+                    fallback_path = modelscope_cache
+                elif os.path.exists(local_pretrained):
+                    fallback_path = local_pretrained
+                elif os.path.exists(local_pretrained_alt):
+                    fallback_path = local_pretrained_alt
             print(f"Warning: SFT merged model not found. Fallback to {fallback_path}")
             model_path = fallback_path
 
@@ -237,17 +253,17 @@ def main():
                 print(f"Warning: Failed to load optimizer state: {e}")
 
     # 7. 加载数据集 (传给构造函数 tokenizer 和 max_length 参数)
-    dataset = GEERLDataset(rl_prompts_path, tokenizer=tokenizer, max_length=1024)
+    dataset = GEERLDataset(rl_prompts_path, tokenizer=tokenizer, max_length=args.max_seq_len)
     dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
 
     # 8. 初始化实验追踪器
     tracker_initialized = False
     if args.use_wandb and WANDB_AVAILABLE:
-        wandb.init(project="geo-minimind-grpo", config=vars(args))
+        wandb.init(project=args.wandb_project, config=vars(args))
         tracker_initialized = True
         print("Wandb initialized.")
     elif args.use_swanlab and SWANLAB_AVAILABLE:
-        swanlab.init(project="geo-minimind-grpo", config=vars(args))
+        swanlab.init(project=args.wandb_project, config=vars(args))
         tracker_initialized = True
         print("SwanLab initialized.")
 
@@ -271,7 +287,7 @@ def main():
             with torch.no_grad():
                 outputs = model.generate(
                     input_ids=prompt_ids_batch,
-                    max_new_tokens=512,
+                    max_new_tokens=args.max_gen_len,
                     do_sample=True,
                     temperature=0.9,
                     top_p=0.95,
@@ -352,8 +368,9 @@ def main():
                 surr1 = ratio * advantages.unsqueeze(-1)
                 surr2 = torch.clamp(ratio, 1.0 - args.epsilon, 1.0 + args.epsilon) * advantages.unsqueeze(-1)
                 
-                # KL 散度约束
-                kl = per_token_log_probs - per_token_ref_log_probs
+                # KL 散度约束 (采用 Schulman 估计式以降低方差并确保非负)
+                log_ratio = per_token_ref_log_probs - per_token_log_probs
+                kl = torch.exp(log_ratio) - 1.0 - log_ratio
                 
                 # Loss 计算
                 loss_t = -torch.min(surr1, surr2) + args.beta * kl
