@@ -3,10 +3,11 @@ import os
 import random
 
 def split_sft_dataset():
-    input_path = '/home/default_user/geo-minimind/data/gee_sft_merged.jsonl'
-    train_path = '/home/default_user/geo-minimind/data/gee_sft_merged_train.jsonl'
-    val_path = '/home/default_user/geo-minimind/data/gee_sft_merged_val.jsonl'
-    test_path = '/home/default_user/geo-minimind/data/gee_sft_merged_test.jsonl'
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    input_path = os.path.join(project_root, 'data', 'gee_sft_merged.jsonl')
+    train_path = os.path.join(project_root, 'data', 'gee_sft_merged_train.jsonl')
+    val_path = os.path.join(project_root, 'data', 'gee_sft_merged_val.jsonl')
+    test_path = os.path.join(project_root, 'data', 'gee_sft_merged_test.jsonl')
     
     if not os.path.exists(input_path):
         print(f"File not found: {input_path}")
@@ -36,9 +37,10 @@ def split_sft_dataset():
     print(f"SFT Dataset Split: Total={total}, Train={len(train_lines)}, Val={len(val_lines)}, Test={len(test_lines)}")
 
 def split_rl_dataset():
-    input_path = '/home/default_user/geo-minimind/data/gee_rl_prompts.jsonl'
-    train_path = '/home/default_user/geo-minimind/data/gee_rl_prompts_train.jsonl'
-    test_path = '/home/default_user/geo-minimind/data/gee_rl_prompts_test.jsonl'
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    input_path = os.path.join(project_root, 'data', 'gee_rl_prompts.jsonl')
+    train_path = os.path.join(project_root, 'data', 'gee_rl_prompts_train.jsonl')
+    test_path = os.path.join(project_root, 'data', 'gee_rl_prompts_test.jsonl')
     
     if not os.path.exists(input_path):
         print(f"File not found: {input_path}")

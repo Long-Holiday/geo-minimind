@@ -197,13 +197,26 @@ def process_assistant_content(content, is_streaming=False):
 
 @st.cache_resource
 def load_model_tokenizer(model_path):
+    import sys
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if project_root not in sys.path:
+        sys.path.append(project_root)
+    from trainer.trainer_utils import resolve_model_path
+
+    resolved_path = resolve_model_path(model_path)
+    kwargs = {}
+    if os.path.exists(resolved_path):
+        kwargs["local_files_only"] = True
+
     model = AutoModelForCausalLM.from_pretrained(
-        model_path,
-        trust_remote_code=True
+        resolved_path,
+        trust_remote_code=True,
+        **kwargs
     )
     tokenizer = AutoTokenizer.from_pretrained(
-        model_path,
-        trust_remote_code=True
+        resolved_path,
+        trust_remote_code=True,
+        **kwargs
     )
     model = model.half().eval().to(device)
     return model, tokenizer

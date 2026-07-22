@@ -15,6 +15,52 @@ from torch.utils.data import Sampler
 from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification
 from model.model_minimind import MiniMindForCausalLM
 
+def resolve_model_path(model_name_or_path="Qwen/Qwen2.5-Coder-1.5B-Instruct"):
+    """
+    智能选择模型路径：先找本地，本地没有就联网下载。
+    """
+    if not model_name_or_path:
+        model_name_or_path = "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+
+    # 1. 如果传入的路径本身作为本地目录存在且包含配置文件或权重
+    if os.path.isdir(model_name_or_path) and (
+        os.path.exists(os.path.join(model_name_or_path, "config.json")) or 
+        os.path.exists(os.path.join(model_name_or_path, "adapter_config.json"))
+    ):
+        print(f"[Model Loader] 找到本地模型路径: {model_name_or_path}")
+        return model_name_or_path
+
+    # 2. 检索常用本地候选路径
+    candidates = [
+        "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct",
+        "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct",
+        "pretrained_models/Qwen2.5-Coder-1.5B-Instruct",
+        os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct"),
+    ]
+    for cand in candidates:
+        if os.path.isdir(cand) and (
+            os.path.exists(os.path.join(cand, "config.json")) or 
+            os.path.exists(os.path.join(cand, "adapter_config.json"))
+        ):
+            print(f"[Model Loader] 找到本地基座模型缓存: {cand}")
+            return cand
+
+    # 3. 本地未找到，启动联网下载
+    print(f"[Model Loader] 本地未找到基座模型 ({model_name_or_path})，准备联网下载...")
+    target_dir = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+    try:
+        from modelscope import snapshot_download
+        ms_id = "qwen/Qwen2.5-Coder-1.5B-Instruct"
+        print(f"[ModelScope] 正在下载 {ms_id} 到 {target_dir} ...")
+        downloaded_path = snapshot_download(ms_id, local_dir=target_dir)
+        print(f"[ModelScope] 模型下载完成: {downloaded_path}")
+        return downloaded_path
+    except Exception as e:
+        print(f"[Warning] ModelScope 下载异常 ({e})，将尝试通过 HuggingFace Hub 在线加载...")
+        if "/" in model_name_or_path:
+            return model_name_or_path
+        return "Qwen/Qwen2.5-Coder-1.5B-Instruct"
+
 def get_model_params(model, config):
     total = sum(p.numel() for p in model.parameters()) / 1e6
     n_routed = getattr(config, 'n_routed_experts', getattr(config, 'num_experts', 0))

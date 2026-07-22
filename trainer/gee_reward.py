@@ -34,8 +34,8 @@ def load_whitelist():
         except Exception as e:
             print(f"Warning: Failed to load whitelist from {whitelist_path}: {e}")
     else:
-        # 尝试使用绝对路径 /home/default_user/geo-minimind/data/gee_api_whitelist.txt
-        alt_path = "/home/default_user/geo-minimind/data/gee_api_whitelist.txt"
+        # 尝试使用家目录备用路径
+        alt_path = os.path.expanduser("~/geo-minimind/data/gee_api_whitelist.txt")
         if os.path.exists(alt_path):
             try:
                 with open(alt_path, "r", encoding="utf-8") as f:

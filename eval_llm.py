@@ -1,7 +1,5 @@
 import os
-# 设置离线模式和环境变量以防网络报错
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
+# 设置环境变量以防 tokenizer 警告
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import time
@@ -12,26 +10,13 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
 from model.model_lora import *
-from trainer.trainer_utils import setup_seed, get_model_params
+from trainer.trainer_utils import setup_seed, get_model_params, resolve_model_path
 warnings.filterwarnings('ignore')
 
 def init_model(args):
     model_path = args.load_from
-    
-    # 优先检测本地 ModelScope 缓存或本地预下载路径
-    modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
-    local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
-    local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
-    if model_path in ["Qwen/Qwen2.5-Coder-1.5B-Instruct", "qwen/Qwen2.5-Coder-1.5B-Instruct"]:
-        if os.path.exists(modelscope_cache):
-            print(f"Redirecting base model to local ModelScope cache: {modelscope_cache}")
-            model_path = modelscope_cache
-        elif os.path.exists(local_pretrained):
-            print(f"Redirecting base model to local pre-downloaded path: {local_pretrained}")
-            model_path = local_pretrained
-        elif os.path.exists(local_pretrained_alt):
-            print(f"Redirecting base model to local pre-downloaded path: {local_pretrained_alt}")
-            model_path = local_pretrained_alt
+    if 'model' not in model_path and not os.path.exists(model_path):
+        model_path = resolve_model_path(model_path)
 
     kwargs = {}
     if os.path.exists(model_path):

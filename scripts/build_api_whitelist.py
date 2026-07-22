@@ -2,8 +2,9 @@ import json
 import os
 
 def build_whitelist():
-    dataset_path = '/home/default_user/geo-minimind/data/gee_sft_dataset.jsonl'
-    output_path = '/home/default_user/geo-minimind/data/gee_api_whitelist.txt'
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    dataset_path = os.path.join(project_root, 'data', 'gee_sft_dataset.jsonl')
+    output_path = os.path.join(project_root, 'data', 'gee_api_whitelist.txt')
     
     symbols = set()
     

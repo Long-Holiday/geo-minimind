@@ -39,19 +39,21 @@ check_environment() {
     echo -e "${CYAN}[Env Check] 正在检测运行环境...${NC}"
     
     # 智能优先选择 minimind 专用的 conda 虚拟环境
-    if [ -x "/home/default_user/miniconda3/envs/minimind/bin/python" ]; then
-        PYTHON_EXE="/home/default_user/miniconda3/envs/minimind/bin/python"
-    elif [ -x "$CONDA_PREFIX/envs/minimind/bin/python" ]; then
+    if [ -x "$HOME/miniconda3/envs/minimind/bin/python" ]; then
+        PYTHON_EXE="$HOME/miniconda3/envs/minimind/bin/python"
+    elif [ -n "$CONDA_PREFIX" ] && [ -x "$CONDA_PREFIX/envs/minimind/bin/python" ]; then
         PYTHON_EXE="$CONDA_PREFIX/envs/minimind/bin/python"
     elif command -v python &> /dev/null; then
         PYTHON_EXE="python"
+    elif command -v python3 &> /dev/null; then
+        PYTHON_EXE="python3"
     else
         echo -e "${RED}[Error] 未找到 python 解释器，请检查 Python 是否已安装且在环境变量中。${NC}"
         return 1
     fi
     
     # 验证 python 是否可用
-    if ! command -v $PYTHON_EXE &> /dev/null; then
+    if ! type "$PYTHON_EXE" &> /dev/null; then
         echo -e "${RED}[Error] 未找到 python 解释器，请检查 Python 是否已安装且在环境变量中。${NC}"
         return 1
     fi
@@ -83,6 +85,95 @@ check_environment() {
         echo -e "  - 配置文件: ${RED}未找到 config.yaml，将使用默认配置。${NC}"
     fi
     echo -e "${BLUE}----------------------------------------------------------------------${NC}"
+}
+
+# 0. 一键全流程自动化运行 (数据处理 -> SFT微调 -> 权重合并 -> GRPO对齐 -> 权重合并 -> 评估)
+run_all_pipeline() {
+    echo -e "${PURPLE}${BOLD}[Run All] 开始准备一键全流程自动化训练与评估...${NC}"
+    echo -e "${YELLOW}全流程包含步骤：${NC}"
+    echo -e "  1. [Data Prep] 数据格式转换与划分"
+    echo -e "  2. [SFT Train] SFT LoRA 微调训练"
+    echo -e "  3. [Merge SFT] 合并 SFT LoRA 权重到 out/qwen_sft_merged"
+    echo -e "  4. [GRPO Train] GRPO 强化学习对齐训练"
+    echo -e "  5. [Merge GRPO] 合并 GRPO LoRA 权重到 out/qwen_grpo_merged"
+    echo -e "  6. [Evaluate] 运行三阶段模型对比评估"
+    echo -e "${BLUE}----------------------------------------------------------------------${NC}"
+    read -p "是否立即开始执行全流程？(y/N): " confirm_all
+    if [[ ! "$confirm_all" =~ ^[Yy]$ ]]; then
+        echo -e "${YELLOW}[Cancelled] 已取消全流程运行。${NC}"
+        return 0
+    fi
+
+    # 步骤 1: 数据准备
+    echo -e "\n${CYAN}=================== [Stage 1/6] 数据格式转换与划分 ===================${NC}"
+    run_data_prep
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[Error] 步骤 1 数据准备失败，中止全流程。${NC}"
+        return 1
+    fi
+
+    # 步骤 2: SFT 微调
+    echo -e "\n${CYAN}=================== [Stage 2/6] SFT LoRA 微调训练 ===================${NC}"
+    if [ -d "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct" ]; then
+        echo -e "${GREEN}[Model Check] 找到本地基座模型: pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct${NC}"
+    elif [ -d "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct" ]; then
+        echo -e "${GREEN}[Model Check] 找到本地基座模型: pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct${NC}"
+    elif [ -d "$HOME/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct" ]; then
+        echo -e "${GREEN}[Model Check] 找到 ModelScope 本地缓存基座模型${NC}"
+    else
+        echo -e "${YELLOW}[Model Check] 未找到本地基座模型目录，训练启动时将自动联网下载 (ModelScope / HuggingFace)...${NC}"
+    fi
+    echo -e "${CYAN}正在启动 train_qwen_lora.py...${NC}"
+    $PYTHON_EXE trainer/train_qwen_lora.py
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[Error] 步骤 2 SFT 训练失败，中止全流程。${NC}"
+        return 1
+    fi
+
+    # 步骤 3: 合并 SFT 权重
+    echo -e "\n${CYAN}=================== [Stage 3/6] 合并 SFT LoRA 权重 ===================${NC}"
+    if [ ! -d "out/qwen_lora_sft" ]; then
+        echo -e "${RED}[Error] 未找到 SFT LoRA 权重目录 (out/qwen_lora_sft)，中止全流程。${NC}"
+        return 1
+    fi
+    echo -e "${CYAN}正在合并 SFT 权重到 out/qwen_sft_merged...${NC}"
+    $PYTHON_EXE scripts/merge_lora_weights.py \
+        --lora_model out/qwen_lora_sft \
+        --output_dir out/qwen_sft_merged
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[Error] 步骤 3 SFT 权重合并失败，中止全流程。${NC}"
+        return 1
+    fi
+
+    # 步骤 4: GRPO 强化学习对齐
+    echo -e "\n${CYAN}=================== [Stage 4/6] GRPO 强化对齐训练 ===================${NC}"
+    echo -e "${CYAN}正在启动 train_qwen_grpo.py...${NC}"
+    $PYTHON_EXE trainer/train_qwen_grpo.py
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[Error] 步骤 4 GRPO 训练失败，中止全流程。${NC}"
+        return 1
+    fi
+
+    # 步骤 5: 合并 GRPO 权重
+    echo -e "\n${CYAN}=================== [Stage 5/6] 合并 GRPO LoRA 权重 ===================${NC}"
+    if [ ! -d "out/qwen_grpo/final" ]; then
+        echo -e "${RED}[Error] 未找到 GRPO 训练最终权重 (out/qwen_grpo/final)，中止全流程。${NC}"
+        return 1
+    fi
+    echo -e "${CYAN}正在合并 GRPO 权重到 out/qwen_grpo_merged...${NC}"
+    $PYTHON_EXE scripts/merge_lora_weights.py \
+        --lora_model out/qwen_grpo/final \
+        --output_dir out/qwen_grpo_merged
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[Error] 步骤 5 GRPO 权重合并失败，中止全流程。${NC}"
+        return 1
+    fi
+
+    # 步骤 6: 模型评估
+    echo -e "\n${CYAN}=================== [Stage 6/6] 运行模型评估 ===================${NC}"
+    run_evaluate
+
+    echo -e "\n${GREEN}${BOLD}[Success] 🎉 恭喜！GEO-MiniMind 一键全流程训练与评估已全部完成！${NC}"
 }
 
 # 1. 一键完成数据转换与划分
@@ -133,12 +224,15 @@ run_sft_train() {
         fi
     fi
 
-    # 检查本地 Qwen 目录
-    BASE_MODEL_DIR="pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
-    if [ ! -d "$BASE_MODEL_DIR" ]; then
-        echo -e "${RED}[Error] 未找到本地 Qwen 极速加载目录: $BASE_MODEL_DIR${NC}"
-        echo -e "请确认您是否已成功下载基座模型。"
-        return 1
+    # 检查本地 Qwen 目录或自动联网下载
+    if [ -d "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct" ]; then
+        echo -e "${GREEN}[Model Check] 找到本地基座模型: pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct${NC}"
+    elif [ -d "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct" ]; then
+        echo -e "${GREEN}[Model Check] 找到本地基座模型: pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct${NC}"
+    elif [ -d "$HOME/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct" ]; then
+        echo -e "${GREEN}[Model Check] 找到 ModelScope 本地缓存基座模型${NC}"
+    else
+        echo -e "${YELLOW}[Model Check] 未检测到本地基座模型，训练启动时将自动联网下载 (ModelScope / HuggingFace)...${NC}"
     fi
 
     # 提供断点续训选项
@@ -333,6 +427,7 @@ while true; do
     check_environment
     
     echo -e "${BOLD}请选择您需要执行的操作:${NC}"
+    echo -e "  ${PURPLE}0)${NC} ${BOLD}[Run All] 一键全流程自动化运行 (数据准备 -> SFT -> SFT合并 -> GRPO -> GRPO合并 -> 评估)${NC}"
     echo -e "  ${GREEN}1)${NC} [Data Prep] 一键完成数据转换与划分"
     echo -e "  ${GREEN}2)${NC} [SFT Train] 启动 SFT LoRA 微调训练"
     echo -e "  ${GREEN}3)${NC} [Merge Weights] 合并 LoRA 权重 (SFT / GRPO)"
@@ -342,9 +437,12 @@ while true; do
     echo -e "  ${GREEN}7)${NC} [Web UI] 启动 Web Demo 网页演示界面"
     echo -e "  ${RED}8)${NC} 退出"
     echo -e "${BLUE}======================================================================${NC}"
-    read -p "请输入对应的操作编号 [1-8]: " main_choice
+    read -p "请输入对应的操作编号 [0-8]: " main_choice
     
     case $main_choice in
+        0)
+            run_all_pipeline
+            ;;
         1)
             run_data_prep
             ;;
@@ -378,3 +476,4 @@ while true; do
     echo -e "\n${YELLOW}按任意键返回主菜单...${NC}"
     read -n 1 -s
 done
+

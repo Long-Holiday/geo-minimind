@@ -57,13 +57,14 @@ def augment_code_comments(assistant_content):
     return augmented_content
 
 def process_sft_data():
-    sft_dataset_path = '/home/default_user/geo-minimind/data/gee_sft_dataset.jsonl'
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    sft_dataset_path = os.path.join(project_root, 'data', 'gee_sft_dataset.jsonl')
     arl_files = [
-        '/home/default_user/geo-minimind/data/arl_sft_converted.jsonl',
-        '/home/default_user/geo-minimind/data/arl_api_complex.jsonl',
-        '/home/default_user/geo-minimind/data/arl_examples_debug.jsonl'
+        os.path.join(project_root, 'data', 'arl_sft_converted.jsonl'),
+        os.path.join(project_root, 'data', 'arl_api_complex.jsonl'),
+        os.path.join(project_root, 'data', 'arl_examples_debug.jsonl')
     ]
-    output_sft_path = '/home/default_user/geo-minimind/data/gee_sft_merged.jsonl'
+    output_sft_path = os.path.join(project_root, 'data', 'gee_sft_merged.jsonl')
     
     merged_data = []
     
@@ -163,8 +164,9 @@ def process_sft_data():
     print(f"Generated {len(merged_data)} samples in {output_sft_path}")
 
 def process_rl_data():
-    rl_dataset_path = '/home/default_user/geo-minimind/data/gee_agentic_rl_dataset.jsonl'
-    output_rl_path = '/home/default_user/geo-minimind/data/gee_rl_prompts.jsonl'
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    rl_dataset_path = os.path.join(project_root, 'data', 'gee_agentic_rl_dataset.jsonl')
+    output_rl_path = os.path.join(project_root, 'data', 'gee_rl_prompts.jsonl')
     
     rl_prompts = []
     if os.path.exists(rl_dataset_path):

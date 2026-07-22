@@ -18,9 +18,7 @@ if project_root not in sys.path:
 
 from dataset.gee_dataset import GEESFTDataset
 
-# 设置离线模式和环境变量以防网络报错与 tokenizer 警告
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
+# 设置环境变量以防 tokenizer 警告
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 def get_latest_checkpoint(output_dir):
@@ -56,6 +54,7 @@ def main():
                         help="Batch size per device for evaluation")
     parser.add_argument("--gradient_accumulation_steps", "--accumulation_steps", type=int, default=4,
                         dest="gradient_accumulation_steps", help="Number of updates steps to accumulate before performing a backward/update pass")
+    parser.add_argument("--dataloader_num_workers", type=int, default=4, help="Number of subprocesses for data loading")
     parser.add_argument("--learning_rate", type=float, default=1e-4,
                         help="Initial learning rate")
     parser.add_argument("--max_length", "--max_seq_len", type=int, default=1024,
@@ -95,21 +94,8 @@ def main():
         except Exception as e:
             print(f"[Warning] Failed to load config file {config_file}: {e}")
 
-    # 如果是默认的 Qwen 路径，且本地 ModelScope 存在该缓存，则自动重定向以加速加载并规避网络错误
-    model_path = args.model_name_or_path
-    if model_path in ["Qwen/Qwen2.5-Coder-1.5B-Instruct", "qwen/Qwen2.5-Coder-1.5B-Instruct"]:
-        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
-        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
-        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
-        if os.path.exists(modelscope_cache):
-            print(f"Redirecting {model_path} to local ModelScope cache: {modelscope_cache}")
-            model_path = modelscope_cache
-        elif os.path.exists(local_pretrained):
-            print(f"Redirecting {model_path} to local pre-downloaded path: {local_pretrained}")
-            model_path = local_pretrained
-        elif os.path.exists(local_pretrained_alt):
-            print(f"Redirecting {model_path} to local pre-downloaded path: {local_pretrained_alt}")
-            model_path = local_pretrained_alt
+    from trainer.trainer_utils import resolve_model_path
+    model_path = resolve_model_path(args.model_name_or_path)
 
     # 1. 实验追踪初始化
     report_to = []
@@ -136,7 +122,7 @@ def main():
 
     # 2. 检查并加载 Tokenizer 与 Model
     kwargs = {}
-    if model_path != args.model_name_or_path:
+    if os.path.exists(model_path):
         kwargs["local_files_only"] = True
 
     print(f"Loading tokenizer from {model_path}...")
@@ -198,6 +184,8 @@ def main():
         gradient_checkpointing=True,
         eval_strategy="steps" if val_dataset is not None else "no",
         eval_steps=args.eval_steps if val_dataset is not None else None,
+        dataloader_num_workers=getattr(args, 'dataloader_num_workers', 4),
+        dataloader_pin_memory=True,
         report_to=report_to,
         logging_first_step=True,
         remove_unused_columns=False

@@ -1,9 +1,7 @@
 import sys
 import os
 
-# 设置离线模式和环境变量以防网络报错
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
+# 设置环境变量以防 tokenizer 警告
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # 动态将项目根目录加入到 sys.path 中以防止导入失败
@@ -192,31 +190,11 @@ def main():
     rl_prompts_path = args.data_path
 
     # 2. 确定模型路径
+    from trainer.trainer_utils import resolve_model_path
     model_path = "out/qwen_sft_merged"
     if not os.path.exists(model_path) or not os.listdir(model_path):
-        modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
-        local_pretrained = "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
-        local_pretrained_alt = "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"
-        if os.path.exists(modelscope_cache):
-            print(f"SFT merged model not found. Using local ModelScope cache: {modelscope_cache}")
-            model_path = modelscope_cache
-        elif os.path.exists(local_pretrained):
-            print(f"SFT merged model not found. Using local pre-downloaded model at {local_pretrained}")
-            model_path = local_pretrained
-        elif os.path.exists(local_pretrained_alt):
-            print(f"SFT merged model not found. Using local pre-downloaded model at {local_pretrained_alt}")
-            model_path = local_pretrained_alt
-        else:
-            fallback_path = args.model_name_or_path
-            if fallback_path in ["Qwen/Qwen2.5-Coder-1.5B-Instruct", "qwen/Qwen2.5-Coder-1.5B-Instruct", "pretrained_models/Qwen/Qwen2___5-Coder-1___5B-Instruct"]:
-                if os.path.exists(modelscope_cache):
-                    fallback_path = modelscope_cache
-                elif os.path.exists(local_pretrained):
-                    fallback_path = local_pretrained
-                elif os.path.exists(local_pretrained_alt):
-                    fallback_path = local_pretrained_alt
-            print(f"Warning: SFT merged model not found. Fallback to {fallback_path}")
-            model_path = fallback_path
+        print(f"[Warning] SFT merged model not found at {model_path}. Fallback to base model...")
+        model_path = resolve_model_path(args.model_name_or_path)
 
     kwargs = {}
     if os.path.exists(model_path):
@@ -275,7 +253,7 @@ def main():
 
     # 7. 加载数据集 (传给构造函数 tokenizer 和 max_length 参数)
     dataset = GEERLDataset(rl_prompts_path, tokenizer=tokenizer, max_length=args.max_seq_len)
-    dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=1, shuffle=True, pin_memory=True, num_workers=2 if torch.cuda.is_available() else 0)
 
     # 8. 初始化实验追踪器
     tracker_initialized = False

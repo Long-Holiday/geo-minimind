@@ -26,8 +26,13 @@ app = FastAPI()
 
 
 def init_model(args):
-    tokenizer = AutoTokenizer.from_pretrained(args.load_from)
-    if 'model' in args.load_from:
+    from trainer.trainer_utils import resolve_model_path
+    load_path = resolve_model_path(args.load_from)
+    kwargs = {}
+    if os.path.exists(load_path):
+        kwargs["local_files_only"] = True
+    tokenizer = AutoTokenizer.from_pretrained(load_path, **kwargs)
+    if 'model' in load_path:
         moe_suffix = '_moe' if args.use_moe else ''
         ckp = f'../{args.save_dir}/{args.weight}_{args.hidden_size}{moe_suffix}.pth'
         model = MiniMindForCausalLM(MiniMindConfig(
@@ -42,7 +47,7 @@ def init_model(args):
             apply_lora(model)
             load_lora(model, f'../{args.save_dir}/lora/{args.lora_weight}_{args.hidden_size}.pth')
     else:
-        model = AutoModelForCausalLM.from_pretrained(args.load_from, trust_remote_code=True)
+        model = AutoModelForCausalLM.from_pretrained(load_path, trust_remote_code=True, **kwargs)
     print(f'MiniMind模型参数量: {sum(p.numel() for p in model.parameters()) / 1e6:.2f} M(illion)')
     return model.half().eval().to(device), tokenizer
 

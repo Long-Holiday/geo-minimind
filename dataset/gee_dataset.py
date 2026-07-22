@@ -109,8 +109,9 @@ if __name__ == '__main__':
     import os
     print("Loading Qwen tokenizer...")
     model_path = 'Qwen/Qwen2.5-Coder-1.5B-Instruct'
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     modelscope_cache = os.path.expanduser("~/.cache/modelscope/hub/qwen/Qwen2.5-Coder-1.5B-Instruct")
-    local_pretrained = "/home/default_user/geo-minimind/pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct"
+    local_pretrained = os.path.join(project_root, "pretrained_models/Qwen/Qwen2.5-Coder-1.5B-Instruct")
     kwargs = {}
     if os.path.exists(modelscope_cache):
         model_path = modelscope_cache
@@ -126,7 +127,8 @@ if __name__ == '__main__':
         tokenizer.pad_token = tokenizer.eos_token
         
     print("Testing GEESFTDataset...")
-    sft_dataset = GEESFTDataset('/home/default_user/geo-minimind/data/gee_sft_merged_val.jsonl', tokenizer, max_length=512)
+    val_data_path = os.path.join(project_root, 'data/gee_sft_merged_val.jsonl')
+    sft_dataset = GEESFTDataset(val_data_path, tokenizer, max_length=512)
     print(f"Loaded {len(sft_dataset)} validation samples.")
     if len(sft_dataset) > 0:
         item = sft_dataset[0]
@@ -139,7 +141,8 @@ if __name__ == '__main__':
             print(f"{i:2d}: Token={repr(token_str):12s} ID={input_ids[i]:6d} Label={label_val}")
             
     print("\nTesting GEERLDataset...")
-    rl_dataset = GEERLDataset('/home/default_user/geo-minimind/data/gee_rl_prompts_test.jsonl', tokenizer, max_length=512)
+    test_rl_path = os.path.join(project_root, 'data/gee_rl_prompts_test.jsonl')
+    rl_dataset = GEERLDataset(test_rl_path, tokenizer, max_length=512)
     print(f"Loaded {len(rl_dataset)} RL test prompts.")
     if len(rl_dataset) > 0:
         item = rl_dataset[0]
