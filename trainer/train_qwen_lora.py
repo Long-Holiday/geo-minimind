@@ -69,7 +69,7 @@ def main():
     parser.add_argument("--lora_alpha", type=int, default=128, help="LoRA alpha scaling factor")
     parser.add_argument("--use_wandb", action="store_true", help="Enable Wandb tracking")
     parser.add_argument("--wandb_project", type=str, default="geo-minimind-sft", help="Wandb project name")
-    parser.add_argument("--use_swanlab", action="store_true", help="Enable Swanlab tracking")
+    parser.add_argument("--gradient_checkpointing", type=lambda x: (str(x).lower() == 'true'), default=False, help="Enable gradient checkpointing")
     parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml file")
     
     args = parser.parse_args()
@@ -137,12 +137,16 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
         torch_dtype=device_dtype,
+        attn_implementation="sdpa",
         device_map="auto",
         **kwargs
     )
 
-    # 3. 启用梯度检查点以降低显存
-    model.gradient_checkpointing_enable()
+    # 3. 根据配置决定是否启用梯度检查点以降低显存
+    use_grad_ckpt = getattr(args, 'gradient_checkpointing', False)
+    if use_grad_ckpt:
+        print("Enabling gradient checkpointing...")
+        model.gradient_checkpointing_enable()
 
     # 4. 配置 PEFT LoRA
     lora_config = LoraConfig(
@@ -181,7 +185,7 @@ def main():
         save_total_limit=3,
         fp16=(device_dtype == torch.float16),
         bf16=(device_dtype == torch.bfloat16),
-        gradient_checkpointing=True,
+        gradient_checkpointing=use_grad_ckpt,
         eval_strategy="steps" if val_dataset is not None else "no",
         eval_steps=args.eval_steps if val_dataset is not None else None,
         dataloader_num_workers=getattr(args, 'dataloader_num_workers', 4),

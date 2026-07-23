@@ -1,8 +1,9 @@
 import sys
 import os
 
-# 设置环境变量以防 tokenizer 警告
+# 设置环境变量以防 tokenizer 警告和显存碎片
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 
 # 动态将项目根目录加入到 sys.path 中以防止导入失败
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -40,6 +41,34 @@ try:
     SWANLAB_AVAILABLE = True
 except ImportError:
     SWANLAB_AVAILABLE = False
+
+
+def compute_per_token_log_probs(logits, labels):
+    """
+    计算 labels 对应位置的 log probabilities，且避免在显存中生成 (B, S, V) 大小的 full log_softmax 张量。
+    """
+    token_logits = logits.gather(dim=-1, index=labels.unsqueeze(-1)).squeeze(-1)
+    logsumexp = torch.logsumexp(logits, dim=-1)
+    return token_logits - logsumexp
+
+
+def get_per_token_log_probs_microbatched(model, outputs, attention_mask, shift_labels, micro_batch_size=2):
+    """
+    分微批次计算生成文本的每个 token log probabilities，降低显存峰值。
+    """
+    per_token_log_probs_list = []
+    num_samples = outputs.size(0)
+    for i in range(0, num_samples, micro_batch_size):
+        sub_outputs = outputs[i:i + micro_batch_size]
+        sub_mask = attention_mask[i:i + micro_batch_size]
+        sub_labels = shift_labels[i:i + micro_batch_size]
+
+        sub_logits = model(input_ids=sub_outputs, attention_mask=sub_mask).logits
+        sub_shift_logits = sub_logits[..., :-1, :].contiguous()
+        sub_log_probs = compute_per_token_log_probs(sub_shift_logits, sub_labels)
+        per_token_log_probs_list.append(sub_log_probs)
+        del sub_logits, sub_shift_logits
+    return torch.cat(per_token_log_probs_list, dim=0)
 
 
 def create_mock_data():
@@ -99,11 +128,8 @@ except ImportError:
                 {"role": "user", "content": user_goal}
             ]
             prompt = self.tokenizer.apply_chat_template(conversations, tokenize=False, add_generation_prompt=True)
-            inputs = self.tokenizer(prompt, max_length=self.max_length, truncation=True)
             return {
-                'prompt': prompt,
-                'input_ids': inputs.input_ids,
-                'attention_mask': inputs.attention_mask
+                'prompt': prompt
             }
 
 
@@ -155,10 +181,13 @@ def main():
     parser.add_argument("--log_steps", type=int, default=1, help="Steps between logs")
     parser.add_argument("--max_seq_len", type=int, default=1024, help="Maximum prompt sequence length")
     parser.add_argument("--max_gen_len", type=int, default=512, help="Maximum generated sequence length")
+    parser.add_argument("--temperature", type=float, default=1.1, help="Sampling temperature for model generations")
+    parser.add_argument("--top_k", type=int, default=50, help="Top-k sampling candidate pool size")
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--use_wandb", action="store_true", help="Enable Wandb tracking")
     parser.add_argument("--wandb_project", type=str, default="geo-minimind-grpo", help="Wandb project name")
     parser.add_argument("--use_swanlab", action="store_true", help="Enable Swanlab tracking")
+    parser.add_argument("--micro_batch_size", type=int, default=2, help="Micro batch size for forward/backward pass during GRPO to save VRAM")
     parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml file")
     args = parser.parse_args()
 
@@ -210,6 +239,7 @@ def main():
     base_model = AutoModelForCausalLM.from_pretrained(
         model_path,
         torch_dtype=torch.bfloat16 if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else torch.float16,
+        attn_implementation="sdpa",
         trust_remote_code=True,
         use_safetensors=True,
         **kwargs
@@ -228,8 +258,9 @@ def main():
     # 5. 断点续训恢复逻辑
     latest_step = None
     lora_ckpt_path = None
-    if args.from_resume:
-        lora_ckpt_path, latest_step = get_latest_checkpoint(args.output_dir)
+    ckpt_path_cand, step_cand = get_latest_checkpoint(args.output_dir)
+    if args.from_resume or ckpt_path_cand is not None:
+        lora_ckpt_path, latest_step = ckpt_path_cand, step_cand
 
     if lora_ckpt_path is not None:
         print(f"Resuming training from checkpoint: {lora_ckpt_path} (step {latest_step})")
@@ -253,7 +284,14 @@ def main():
 
     # 7. 加载数据集 (传给构造函数 tokenizer 和 max_length 参数)
     dataset = GEERLDataset(rl_prompts_path, tokenizer=tokenizer, max_length=args.max_seq_len)
-    dataloader = DataLoader(dataset, batch_size=1, shuffle=True, pin_memory=True, num_workers=2 if torch.cuda.is_available() else 0)
+    dataloader = DataLoader(
+        dataset,
+        batch_size=args.batch_size,
+        shuffle=True,
+        pin_memory=True,
+        num_workers=2 if torch.cuda.is_available() else 0,
+        collate_fn=lambda batch: {'prompt': [item['prompt'] for item in batch]}
+    )
 
     # 8. 初始化实验追踪器
     tracker_initialized = False
@@ -273,142 +311,161 @@ def main():
     for epoch in range(args.num_epochs):
         print(f"\n--- Epoch {epoch + 1}/{args.num_epochs} ---")
         for batch in dataloader:
-            prompt_text = batch["prompt"][0]
-            
-            # 使用 tokenizer 对已应用模板的 prompt 文本重新 tokenize 以获取长度
-            prompt_inputs = tokenizer(prompt_text, return_tensors="pt")
-            prompt_ids = prompt_inputs["input_ids"].to(device)
-            prompt_len = prompt_ids.shape[1]
+            prompts = batch["prompt"] if isinstance(batch["prompt"], list) else [batch["prompt"]]
+            for prompt_text in prompts:
+                # 使用 tokenizer 对已应用模板的 prompt 文本重新 tokenize 以获取长度
+                prompt_inputs = tokenizer(prompt_text, return_tensors="pt")
+                prompt_ids = prompt_inputs["input_ids"].to(device)
+                prompt_len = prompt_ids.shape[1]
 
-            # B. 采样生成 G=4 个 completion 样本
-            prompt_ids_batch = prompt_ids.repeat(args.num_generations, 1).to(device)
-            model.eval()
-            with torch.no_grad():
-                outputs = model.generate(
-                    input_ids=prompt_ids_batch,
-                    max_new_tokens=args.max_gen_len,
-                    do_sample=True,
-                    temperature=0.9,
-                    top_p=0.95,
-                    pad_token_id=tokenizer.pad_token_id,
-                    eos_token_id=tokenizer.eos_token_id,
-                )
+                # B. 采样生成 G 个 completions 样本 (使用 num_return_sequences 保证采样随机多样性)
+                model.eval()
+                with torch.no_grad():
+                    outputs = model.generate(
+                        input_ids=prompt_ids,
+                        num_return_sequences=args.num_generations,
+                        max_new_tokens=args.max_gen_len,
+                        do_sample=True,
+                        temperature=getattr(args, "temperature", 1.1),
+                        top_k=getattr(args, "top_k", 50),
+                        top_p=0.95,
+                        pad_token_id=tokenizer.pad_token_id,
+                        eos_token_id=tokenizer.eos_token_id,
+                    )
 
-            # 截取 completion 部分，并进行 decode
-            completion_ids = outputs[:, prompt_len:]
-            completions = tokenizer.batch_decode(completion_ids, skip_special_tokens=True)
+                # 截取 completion 部分，并进行 decode
+                completion_ids = outputs[:, prompt_len:]
+                completions = tokenizer.batch_decode(completion_ids, skip_special_tokens=True)
 
-            # C. 评分与计算优势 (Group Relative Advantage)
-            prompts_dup = [prompt_text] * args.num_generations
-            
-            # 各维度打分，用于日志记录
-            syntax_rewards = syntax_reward_func(prompts_dup, completions)
-            api_rewards = api_reward_func(prompts_dup, completions)
-            format_rewards = format_reward_func(prompts_dup, completions)
-            completeness_rewards = completeness_reward_func(prompts_dup, completions)
-            
-            # 综合 Reward
-            rewards = gee_reward_func(prompts_dup, completions)
-            rewards = np.array(rewards, dtype=np.float32)
-            
-            mean_r = rewards.mean()
-            std_r = rewards.std()
-            if std_r < 1e-6:
-                advantages = np.zeros_like(rewards)
-            else:
-                advantages = (rewards - mean_r) / (std_r + 1e-8)
-            
-            advantages = torch.tensor(advantages, device=device)
+                # C. 评分与计算优势 (Group Relative Advantage)
+                prompts_dup = [prompt_text] * args.num_generations
+                
+                # 各维度打分，用于日志记录
+                syntax_rewards = syntax_reward_func(prompts_dup, completions)
+                api_rewards = api_reward_func(prompts_dup, completions)
+                format_rewards = format_reward_func(prompts_dup, completions)
+                completeness_rewards = completeness_reward_func(prompts_dup, completions)
+                
+                # 综合 Reward
+                rewards = gee_reward_func(prompts_dup, completions)
+                rewards = np.array(rewards, dtype=np.float32)
+                
+                mean_r = rewards.mean()
+                std_r = rewards.std()
+                if std_r < 1e-6:
+                    # 若组内得分完全相同，结合生成文本长度微弱浮点差进行差分，确保 Advantage 不清零
+                    lengths = np.array([len(c) for c in completions], dtype=np.float32)
+                    len_std = lengths.std()
+                    if len_std > 1e-3:
+                        advantages = (lengths - lengths.mean()) / (len_std + 1e-8) * 0.05
+                    else:
+                        advantages = np.zeros_like(rewards)
+                else:
+                    advantages = (rewards - mean_r) / (std_r + 1e-8)
+                
+                advantages = torch.tensor(advantages, device=device)
 
-            # D. 建立 completion 的 mask
-            attention_mask = (outputs != tokenizer.pad_token_id).long()
-            completion_mask = torch.zeros_like(outputs)
-            for i in range(args.num_generations):
-                non_pad_indices = torch.where(attention_mask[i] == 1)[0]
-                if len(non_pad_indices) > 0:
-                    last_non_pad = non_pad_indices[-1].item()
-                    if last_non_pad >= prompt_len:
-                        completion_mask[i, prompt_len : last_non_pad + 1] = 1.0
+                # D. 建立 completion 的 mask
+                attention_mask = (outputs != tokenizer.pad_token_id).long()
+                completion_mask = torch.zeros_like(outputs)
+                for i in range(args.num_generations):
+                    non_pad_indices = torch.where(attention_mask[i] == 1)[0]
+                    if len(non_pad_indices) > 0:
+                        last_non_pad = non_pad_indices[-1].item()
+                        if last_non_pad >= prompt_len:
+                            completion_mask[i, prompt_len : last_non_pad + 1] = 1.0
 
-            # E. 第一次前向计算 old_log_probs (为计算比值 ratio 做准备)
-            model.eval()
-            with torch.no_grad():
-                old_logits = model(input_ids=outputs, attention_mask=attention_mask).logits
-                shift_old_logits = old_logits[..., :-1, :].contiguous()
+                # E. 第一次前向计算 old_log_probs 与 ref_log_probs (采用微批次与高效 log_prob 规避 15W 词表显存爆炸)
                 shift_labels = outputs[..., 1:].contiguous()
                 shift_mask = completion_mask[..., 1:].contiguous()
-                
-                old_log_probs = torch.log_softmax(shift_old_logits, dim=-1)
-                per_token_old_log_probs = torch.gather(old_log_probs, dim=-1, index=shift_labels.unsqueeze(-1)).squeeze(-1)
 
-                # Reference 模型的概率计算（LoRA 冻结底座）
-                with model.disable_adapter():
-                    ref_logits = model(input_ids=outputs, attention_mask=attention_mask).logits
-                    shift_ref_logits = ref_logits[..., :-1, :].contiguous()
-                    ref_log_probs = torch.log_softmax(shift_ref_logits, dim=-1)
-                    per_token_ref_log_probs = torch.gather(ref_log_probs, dim=-1, index=shift_labels.unsqueeze(-1)).squeeze(-1)
+                model.eval()
+                with torch.no_grad():
+                    per_token_old_log_probs = get_per_token_log_probs_microbatched(
+                        model, outputs, attention_mask, shift_labels, micro_batch_size=args.micro_batch_size
+                    )
+                    with model.disable_adapter():
+                        per_token_ref_log_probs = get_per_token_log_probs_microbatched(
+                            model, outputs, attention_mask, shift_labels, micro_batch_size=args.micro_batch_size
+                        )
 
-            # F. 多步 Policy 更新 (PPO / GRPO clipping)
-            model.train()
-            step_losses = []
-            step_kls = []
-            
-            for ppo_epoch in range(args.ppo_epochs):
-                logits = model(input_ids=outputs, attention_mask=attention_mask).logits
-                shift_logits = logits[..., :-1, :].contiguous()
-                
-                log_probs = torch.log_softmax(shift_logits, dim=-1)
-                per_token_log_probs = torch.gather(log_probs, dim=-1, index=shift_labels.unsqueeze(-1)).squeeze(-1)
+                # F. 多步 Policy 更新 (PPO / GRPO clipping，采用微批次梯度累积)
+                model.train()
+                step_losses = []
+                step_kls = []
+                mb_size = args.micro_batch_size
+                num_samples = outputs.size(0)
+                total_tokens = shift_mask.sum() + 1e-8
 
-                # 比值 r_t
-                ratio = torch.exp(per_token_log_probs - per_token_old_log_probs)
-                
-                # Clipped Surrogates
-                surr1 = ratio * advantages.unsqueeze(-1)
-                surr2 = torch.clamp(ratio, 1.0 - args.epsilon, 1.0 + args.epsilon) * advantages.unsqueeze(-1)
-                
-                # KL 散度约束 (采用 Schulman 估计式以降低方差并确保非负)
-                log_ratio = per_token_ref_log_probs - per_token_log_probs
-                kl = torch.exp(log_ratio) - 1.0 - log_ratio
-                
-                # Loss 计算
-                loss_t = -torch.min(surr1, surr2) + args.beta * kl
-                loss = (loss_t * shift_mask).sum() / (shift_mask.sum() + 1e-8)
+                for ppo_epoch in range(args.ppo_epochs):
+                    optimizer.zero_grad()
+                    epoch_loss_val = 0.0
+                    epoch_kl_val = 0.0
 
-                optimizer.zero_grad()
-                loss.backward()
-                optimizer.step()
-                
-                step_losses.append(loss.item())
-                step_kls.append(kl.detach().mean().item())
+                    for i in range(0, num_samples, mb_size):
+                        sub_outputs = outputs[i:i + mb_size]
+                        sub_mask = attention_mask[i:i + mb_size]
+                        sub_shift_labels = shift_labels[i:i + mb_size]
+                        sub_shift_mask = shift_mask[i:i + mb_size]
+                        sub_advantages = advantages[i:i + mb_size]
+                        sub_old_log_probs = per_token_old_log_probs[i:i + mb_size]
+                        sub_ref_log_probs = per_token_ref_log_probs[i:i + mb_size]
 
-            # G. 日志记录
-            if global_step % args.log_steps == 0:
-                print(f"[Step {global_step}] Loss: {np.mean(step_losses):.4f} | R_mean: {mean_r:.4f} | R_std: {std_r:.4f} | KL: {np.mean(step_kls):.4f}")
-                print(f"        -> Sub Rewards | Syntax: {np.mean(syntax_rewards):.2f} | API: {np.mean(api_rewards):.2f} | Format: {np.mean(format_rewards):.2f} | Completeness: {np.mean(completeness_rewards):.2f}")
-                
-                log_data = {
-                    "step": global_step,
-                    "loss": np.mean(step_losses),
-                    "kl": np.mean(step_kls),
-                    "reward_mean": mean_r,
-                    "reward_std": std_r,
-                    "reward_syntax": np.mean(syntax_rewards),
-                    "reward_api": np.mean(api_rewards),
-                    "reward_format": np.mean(format_rewards),
-                    "reward_completeness": np.mean(completeness_rewards),
-                }
-                
-                if args.use_wandb and WANDB_AVAILABLE:
-                    wandb.log(log_data)
-                elif args.use_swanlab and SWANLAB_AVAILABLE:
-                    swanlab.log(log_data)
+                        sub_logits = model(input_ids=sub_outputs, attention_mask=sub_mask).logits
+                        sub_shift_logits = sub_logits[..., :-1, :].contiguous()
+                        sub_log_probs = compute_per_token_log_probs(sub_shift_logits, sub_shift_labels)
 
-            # H. 保存 Checkpoint
-            if global_step % args.save_steps == 0:
-                save_checkpoint(model, optimizer, global_step, args.output_dir)
+                        ratio = torch.exp(sub_log_probs - sub_old_log_probs)
+                        surr1 = ratio * sub_advantages.unsqueeze(-1)
+                        surr2 = torch.clamp(ratio, 1.0 - args.epsilon, 1.0 + args.epsilon) * sub_advantages.unsqueeze(-1)
 
-            global_step += 1
+                        log_ratio = sub_ref_log_probs - sub_log_probs
+                        kl = torch.exp(log_ratio) - 1.0 - log_ratio
+
+                        loss_t = -torch.min(surr1, surr2) + args.beta * kl
+                        sub_loss = (loss_t * sub_shift_mask).sum() / total_tokens
+                        sub_loss.backward()
+
+                        epoch_loss_val += sub_loss.item()
+                        epoch_kl_val += kl.detach().mean().item() * (sub_outputs.size(0) / num_samples)
+                        del sub_logits, sub_shift_logits, sub_log_probs, ratio, surr1, surr2, log_ratio, kl, loss_t, sub_loss
+
+                    optimizer.step()
+                    step_losses.append(epoch_loss_val)
+                    step_kls.append(epoch_kl_val)
+
+                # 清理本 Step 产生的张量与缓存
+                del per_token_old_log_probs, per_token_ref_log_probs, outputs, attention_mask, completion_mask, shift_labels, shift_mask
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+
+                # G. 日志记录
+                if global_step % args.log_steps == 0:
+                    print(f"[Step {global_step}] Loss: {np.mean(step_losses):.6f} | R_mean: {mean_r:.4f} | R_std: {std_r:.6f} | KL: {np.mean(step_kls):.6f}")
+                    print(f"        -> Sub Rewards | Syntax: {np.mean(syntax_rewards):.2f} | API: {np.mean(api_rewards):.2f} | Format: {np.mean(format_rewards):.2f} | Completeness: {np.mean(completeness_rewards):.2f}")
+                    
+                    log_data = {
+                        "step": global_step,
+                        "loss": np.mean(step_losses),
+                        "kl": np.mean(step_kls),
+                        "reward_mean": mean_r,
+                        "reward_std": std_r,
+                        "reward_syntax": np.mean(syntax_rewards),
+                        "reward_api": np.mean(api_rewards),
+                        "reward_format": np.mean(format_rewards),
+                        "reward_completeness": np.mean(completeness_rewards),
+                    }
+                    
+                    if args.use_wandb and WANDB_AVAILABLE:
+                        wandb.log(log_data)
+                    elif args.use_swanlab and SWANLAB_AVAILABLE:
+                        swanlab.log(log_data)
+
+                # H. 保存 Checkpoint
+                if global_step % args.save_steps == 0:
+                    save_checkpoint(model, optimizer, global_step, args.output_dir)
+
+                global_step += 1
 
     # 保存最终的模型 LoRA 权重
     final_dir = os.path.join(args.output_dir, "final")

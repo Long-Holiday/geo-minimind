@@ -95,13 +95,8 @@ class GEERLDataset(Dataset):
             {"role": "user", "content": user_goal}
         ]
         prompt = self.tokenizer.apply_chat_template(conversations, tokenize=False, add_generation_prompt=True)
-        
-        inputs = self.tokenizer(prompt, max_length=self.max_length, truncation=True)
-        
         return {
-            'prompt': prompt,
-            'input_ids': inputs.input_ids,
-            'attention_mask': inputs.attention_mask
+            'prompt': prompt
         }
 
 if __name__ == '__main__':

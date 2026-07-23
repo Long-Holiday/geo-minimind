@@ -8,14 +8,15 @@ sft:
   val_file: "data/gee_sft_merged_val.jsonl"
   output_dir: "out/qwen_lora_sft"
   num_train_epochs: 5
-  per_device_train_batch_size: 8
-  per_device_eval_batch_size: 8
-  gradient_accumulation_steps: 4
-  dataloader_num_workers: 4
+  per_device_train_batch_size: 16 # 充分利用 24G 显存空闲余量 (从 8 调至 16)
+  per_device_eval_batch_size: 16
+  gradient_accumulation_steps: 2 # 保持总有效 Batch Size = 32 (16*2)
+  dataloader_num_workers: 6 # 充分利用 8 核 CPU 和 31G 内存
   learning_rate: 0.0001 # 1e-4
-  max_length: 512
+  max_length: 1024 # 扩大至 1024 上下文，防止长 GEE 代码截断
   save_steps: 100
-  eval_steps: 50
+  eval_steps: 100 # 从 50 调整至 100，减少验证频繁评估等待
+  gradient_checkpointing: false # 显存充足时关闭重算，提升 20%+ 训练速度
   lora_r: 64
   lora_alpha: 128
   use_wandb: false
@@ -27,16 +28,19 @@ grpo:
   data_path: "./data/gee_rl_prompts_train.jsonl"
   output_dir: "./out/qwen_grpo"
   num_epochs: 2
-  lr: 0.000002 # 2e-6
-  batch_size: 1
-  beta: 0.05
+  lr: 0.000003 # 3e-6
+  batch_size: 4
+  beta: 0.02 # 适度放宽 KL 惩罚，提升策略学习空间
   epsilon: 0.2
   ppo_epochs: 1
-  num_generations: 4
-  save_steps: 10
+  num_generations: 12 # 提升至 12，大大增强组内 Advantage 估算质量与 GPU 采样吞吐量
+  micro_batch_size: 2 # 微批次调整为 2，降低生成长文本时的显存峰值
+  temperature: 1.1 # 提高采样温度至 1.1，增加生成多样性，消除组内奖励坍缩
+  top_k: 50 # 保留 50 个候选词采样池，彻底解决顶层概率过于集中导致的采样坍缩 (Sampling Collapse)
+  save_steps: 20
   log_steps: 1
-  max_seq_len: 512
-  max_gen_len: 256
+  max_seq_len: 1024 # 扩大至 1024
+  max_gen_len: 512 # 从 256 扩大至 512，保证 RL 生成完整的 GEE 代码
   use_wandb: false
   wandb_project: "geo-minimind-grpo"
 
